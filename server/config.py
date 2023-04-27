@@ -5,9 +5,9 @@ from flask_restful import Api
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import MetaData
 from flask_bcrypt import Bcrypt
-from dotenv import load_dotenv, dotenv_values
+from dotenv import dotenv_values
 
-print(dotenv_values())
+api_key = dotenv_values('.env')["API_KEY"]
 
 #Some of this may change for deployment
 app = Flask(__name__)
