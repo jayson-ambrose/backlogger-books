@@ -2,13 +2,9 @@ import { StyleSheet, Text, View, TextInput, Button } from "react-native";
 import { Link, useRouter } from 'expo-router'
 import React, { useState } from 'react'
 
-import Search from './src/Search'
+import Login from './src/Login'
 
-export default function Page() {
-
-  function doTheThing() {
-    console.log('Tacos')
-  }
+export default function Page() {  
 
   function navigateSearch() {
     router.push('src/Search')
@@ -20,11 +16,7 @@ export default function Page() {
     <View style={styles.container}>
       <View style={styles.main}>
         <Text style={styles.title}>Backlogger Books</Text>
-        <Text style={{marginTop: 25}}>Login:</Text>
-        <TextInput style={styles.textfield} placeholder={'Enter Username...'}/>
-        <TextInput secureTextEntry={true} style={styles.textfield} placeholder={'Enter Password...'}/>
-        <Button title={'Login'} onPress={doTheThing}/>
-        <Link href={'/'} style={{color: 'blue'}}>Create Account</Link>
+        <Login />        
         <Button title={'Backlog'}/>
         <Button title={'Account Details'}/>
         <Button onPress={navigateSearch} title={'Search'}/>
@@ -40,7 +32,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     padding: 24,
-    backgroundColor: '#cec2ad',
+    backgroundColor: '#2c666f',
   },
   main: {
     flex: 1,
@@ -51,14 +43,10 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 38,
     fontWeight: "bold",
+    color: '#fff'
   },
   subtitle: {
     fontSize: 36,
     color: "#38434D",
-  },
-  textfield: {
-    backgroundColor: '#fff',
-    borderWidth: 2,
-    paddingLeft: 10
   }
 });

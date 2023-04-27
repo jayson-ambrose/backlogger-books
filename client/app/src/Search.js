@@ -4,13 +4,11 @@ import React, {useState} from 'react'
 import { Button, StyleSheet, Text, View, TextInput } from 'react-native';
 import SearchDisplay from './SearchDisplay'
 
-function Search({navigation}) {
+function Search() {
 
     const [text, setText] = useState('')
     const [searchBy, setSearchBy] = useState('title')
     const [bookList, setBookList] = useState([])
-
-    // const title = 'The Eye of the World'
     
     const handleSearch = () => {
 
@@ -25,33 +23,20 @@ function Search({navigation}) {
             const books = []
 
             data.docs.forEach((item) => {
-                // console.log(item.title, item.isbn[0], item.author_name[0])
-                // coverImageUrl = `https://covers.openlibrary.org/b/isbn/${'9781250768681'}-M.jpg`
-
-                console.log(item.isbn?.length)
-
-                
+                console.log(item.isbn?.length)                
                 if (item.title != undefined && item.isbn?.length != undefined && item.author_name?.length != undefined) {
-                    
-                    console.log(item.title)
-
 
                     book_object = {
                         title: item?.title,
                         isbn: item?.isbn[0],
                         author: item?.author_name[0]
                     }
-
-                    books.push(book_object)
-                
+                    books.push(book_object)                
                 }
-
-                
-                
             })
-
             setBookList(books)
         })
+        .catch(error => {console.log(error)})
     }
 
     return(
