@@ -11,17 +11,13 @@ function Search({navigation}) {
         console.log(text)
     }
 
-    function handleChange(e) {
-        setText(e.target.value)
-    }
-
     return(
         <View style={styles.container}>
             <Text>Enter title to search: </Text>
             <TextInput 
                 placeholder={'enter query'} 
                 onSubmitEditing={handleSearch}
-                onChange={handleChange}
+                onChangeText={(value) => setText(value)}
                 value={text}
             />
             <Button 
@@ -38,9 +34,13 @@ export default Search
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: '#fff',
+      backgroundColor: '#38434D',
       alignItems: 'center',
       justifyContent: 'center',
+      backgroundColor: ''
     },
+    textinput: {
+        
+    }
   });
    
