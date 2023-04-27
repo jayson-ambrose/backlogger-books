@@ -7,7 +7,7 @@ import Search from './src/Search'
 export default function Page() {
 
   function doTheThing() {
-    console.log(`Doesn't work yet`)
+    console.log('Tacos')
   }
 
   function navigateSearch() {

@@ -2,14 +2,13 @@ import React, {useState} from 'react'
 
 // import native components here
 import { Button, StyleSheet, Text, View, TextInput } from 'react-native';
+// import { PRIVATE_KEY } from '@env'
 
 function Search({navigation}) {
 
     const [text, setText] = useState('')
 
-    function handleSearch () {
-        console.log(text)
-    }
+    //build route that holds api key in backend
 
     return(
         <View style={styles.container}>
