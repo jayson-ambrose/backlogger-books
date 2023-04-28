@@ -35,6 +35,7 @@ class User(db.Model, SerializerMixin):
         self._password = password_hash
 
     def auth(self, password):
+        print(bcrypt.check_password_hash(self.password, password))
         return bcrypt.check_password_hash(self.password, password)
 
 class Book(db.Model, SerializerMixin):

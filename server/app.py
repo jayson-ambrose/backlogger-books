@@ -10,6 +10,36 @@ from dotenv import load_dotenv
 
 app.secret_key = 'change this secret key'
 
+class Logout(Resource):
+    def get(self):
+        session['user_id'] = None
+        return {}, 204
+    
+    def delete(self):
+        session['user_id'] = None
+        return {}, 204
+
+class Login(Resource):
+
+    def post(self):
+        req_data = request.get_json()
+        print(request.get_json())
+        user = User.query.filter(User.username == req_data['username']).first()       
+        
+        try:
+            if user.auth(req_data['password']) == False:
+                print ('wrong password')
+                return make_response({"error":"wrong password"}, 401) 
+                      
+            session['user_id'] = user.id
+            print('made it here')
+            print[session['user_id']]
+            return make_response(user.to_dict(), 200)
+        
+        except:
+            return make_response( {'error': '401 user not found or incorrect password'}, 401)
+    
+
 class Users(Resource):
     def get(self):
         user_list = []
@@ -61,7 +91,7 @@ class Backlogs(Resource):
         except:
             return make_response({"error": "something went wrong"}, 400)
 
-
+api.add_resource(Login,'/login')
 api.add_resource(Users, '/users')
 api.add_resource(Backlogs, '/backlogs')
 
