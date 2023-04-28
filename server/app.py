@@ -33,7 +33,7 @@ class Login(Resource):
                       
             session['user_id'] = user.id
             print('made it here')
-            print[session['user_id']]
+            print(session['user_id'])
             return make_response(user.to_dict(), 200)
         
         except:
