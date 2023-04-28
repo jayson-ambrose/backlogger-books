@@ -6,15 +6,15 @@ import SearchDisplay from './SearchDisplay'
 
 function Search() {
 
-    const [text, setText] = useState('')
+    const [query, setQuery] = useState('')
     const [searchBy, setSearchBy] = useState('title')
     const [bookList, setBookList] = useState([])
     
     const handleSearch = () => {
 
-        console.log(text)
+        console.log(query)
 
-        fetch(`https://openlibrary.org/search.json?title=${text}&limit=30`)
+        fetch(`https://openlibrary.org/search.json?title=${query}&limit=30`)
         .then(resp => resp.json())
         .then(data => {
 
@@ -35,6 +35,7 @@ function Search() {
                 }
             })
             setBookList(books)
+            setQuery('')
         })
         .catch(error => {console.log(error)})
     }
@@ -47,8 +48,8 @@ function Search() {
             <TextInput 
                 placeholder={'enter query'} 
                 onSubmitEditing={handleSearch}
-                onChangeText={(value) => setText(value)}
-                value={text}
+                onChangeText={(value) => setQuery(value)}
+                value={query}
             />
             <Button 
                 title={'Search'} 

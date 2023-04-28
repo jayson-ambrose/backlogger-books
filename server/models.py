@@ -8,8 +8,13 @@ from config import db, bcrypt
 class User(db.Model, SerializerMixin):
     __tablename__ = 'users'
 
+    serialize_rules = ("-created_at", "-updated_at", '-password',
+                       '-backlogs.user', '-reviews.user', '-books_reviewed.user',
+                       '-books_backlogged.user', '-backlogs.book', '-reviews.book',
+                       '-_password')
+
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String, nullable=False)
+    username = db.Column(db.String, nullable=False, unique=True)
     _password = db.Column(db.String, nullable=False)
     favorite_author = db.Column(db.String)
     favorite_title = db.Column(db.String)
@@ -18,7 +23,7 @@ class User(db.Model, SerializerMixin):
     backlogs = db.relationship('Backlog', backref='user')
 
     books_reviewed = association_proxy('reviews', 'books')
-    books_backloged = association_proxy('backlogs', 'books')
+    books_backlogged = association_proxy('backlogs', 'books')
 
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())

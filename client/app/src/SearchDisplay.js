@@ -17,7 +17,7 @@ function SearchDisplay({ bookList }) {
                     source={{uri: `https://covers.openlibrary.org/b/isbn/${isbn}-S.jpg`}}
                     style={styles.cover}
                 />
-                <Button title={'Backlog'}/>
+                <Button title={'See Details'}/>
                 <Text/>
             </View>
         )

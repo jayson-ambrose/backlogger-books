@@ -2,7 +2,7 @@
   "name": "client",
   "version": "1.0.0",
   "main": "index.js",
-  "proxy": "http://localhost:5555",
+  "proxy": "http://localhost:5055",
   "scripts": {
     "start": "expo start --dev-client",
     "android": "expo run:android",

@@ -1,12 +1,9 @@
 from flask import request, make_response, session
 from flask_restful import Resource
-import requests
-import json
+from sqlalchemy.exc import IntegrityError
 
 from config import app, db, api
 from models import User, Review, Backlog, Book
-
-from dotenv import load_dotenv
 
 app.secret_key = 'change this secret key'
 
@@ -23,7 +20,6 @@ class Login(Resource):
 
     def post(self):
         req_data = request.get_json()
-        print(request.get_json())
         user = User.query.filter(User.username == req_data['username']).first()       
         
         try:
@@ -34,19 +30,36 @@ class Login(Resource):
             session['user_id'] = user.id
             print('made it here')
             print(session['user_id'])
+
             return make_response(user.to_dict(), 200)
         
         except:
             return make_response( {'error': '401 user not found or incorrect password'}, 401)
-    
 
 class Users(Resource):
     def get(self):
         user_list = []
         for user in User.query.all():
-            user_list.append(user.to_dict(only=('username', 'favorite_author', 'favorite_title')))
+            user_list.append(user.to_dict())
 
         return make_response(user_list, 200)
+    
+    def post(self):
+        req = request.get_json()
+
+        if req['password'] != req['re_password']:
+            return make_response({'error':'401: passwords do not match.'}, 401)
+        
+        user = User(username=req.get('username'), password=req.get('password'))
+        try:
+            db.session.add(user)
+            db.session.commit()
+            return make_response(user.to_dict(), 201)
+        except IntegrityError:
+            db.session.rollback()
+            return make_response({'error': 'error 400: Username already taken!'}, 400)
+        
+
     
 class BooksById(Resource):
     #get book details from backend by isbn (used by backlog not search)
@@ -96,4 +109,4 @@ api.add_resource(Users, '/users')
 api.add_resource(Backlogs, '/backlogs')
 
 if __name__ == '__main__':
-    app.run(port=5555, debug=True)
+    app.run(port=5055, debug=True)
