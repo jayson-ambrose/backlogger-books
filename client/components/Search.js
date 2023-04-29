@@ -6,7 +6,7 @@ import SearchDisplay from './SearchDisplay'
 import {useRecoilState, useSetRecoilState, useRecoilValue} from 'recoil'
 import {activeAccountAtom, loggedInAtom} from './lib/atoms'
 
-function Search() {
+function Search({navigation}) {
 
     const activeAccount = useRecoilValue(activeAccountAtom)
     
@@ -60,7 +60,7 @@ function Search() {
                 type={'submit'}
                 onPress={handleSearch}
             />
-            <SearchDisplay bookList={bookList}/>
+            <SearchDisplay bookList={bookList} navigation={navigation}/>
         </View>
     )
 }   

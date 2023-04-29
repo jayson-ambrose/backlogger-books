@@ -3,7 +3,7 @@ import React from 'react'
 // import native components here
 import { Button, StyleSheet, Text, View, ScrollView, Image } from 'react-native';
 
-function SearchDisplay({ bookList }) {
+function SearchDisplay({ bookList, navigation }) {
 
     const displayBooks = bookList.map((book) => {
         const {title, author, isbn} = book
@@ -17,7 +17,10 @@ function SearchDisplay({ bookList }) {
                     source={{uri: `https://covers.openlibrary.org/b/isbn/${isbn}-S.jpg`}}
                     style={styles.cover}
                 />
-                <Button title={'See Details'}/>
+                <Button 
+                    title={'See Details'}
+                    onPress={() => navigation.navigate('Details', {isbn: isbn, title: title, author: author})}
+                />
                 <Text/>
             </View>
         )

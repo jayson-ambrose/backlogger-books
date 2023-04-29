@@ -5,6 +5,7 @@ import LandingScreen from './components/LandingScreen'
 import CreateAccount from './components/CreateAccount'
 import Search from './components/Search'
 import Test from './components/Test'
+import Details from './components/Details'
 
 import {RecoilRoot} from 'recoil'
 
@@ -32,6 +33,11 @@ export default function App() {
             <Stack.Screen 
               name = 'Search'
               component ={Search}
+              options={{title: 'Find Titles'}}
+            />
+            <Stack.Screen 
+              name = 'Details'
+              component ={Details}
               options={{title: 'Welcome'}}
             />
             <Stack.Screen 
