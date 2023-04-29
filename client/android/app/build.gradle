@@ -113,9 +113,9 @@ android {
 
     compileSdkVersion rootProject.ext.compileSdkVersion
 
-    namespace "com.client"
+    namespace "com.proofofconcept"
     defaultConfig {
-        applicationId "com.client"
+        applicationId "com.proofofconcept"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

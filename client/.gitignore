@@ -54,6 +54,5 @@ yarn-error.log
 web-build/
 dist/
 
-# Keys
-.env
+#Auth Keys
 keys.js

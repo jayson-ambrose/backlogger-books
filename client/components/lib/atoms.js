@@ -1,6 +1,6 @@
 import { atom } from "recoil";
 
-export const activeAtom = atom({
+export const activeAccountAtom = atom({
     key: 'activeKey',
     default: {},
 })

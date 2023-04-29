@@ -1,13 +1,45 @@
 import React, {useState} from 'react'
 
 // import native components here
-import { Button, StyleSheet, Text, View, TextInput } from 'react-native';
+import { Button, StyleSheet, Text, View, TextInput} from 'react-native';
 
 function CreateAccount() {
 
+    const router = useRouter()
+    const {handleLogin} = useSearchParams()
+
+    console.log(handleLogin)
+
     const [userText, setUserText] = useState('')
     const [passText, setPassText] = useState('')
-    const [rePassText, setRePassText] = useState('')    
+    const [rePassText, setRePassText] = useState('')  
+    
+    
+    
+    function handleSubmit(user, pass, rePass) {
+
+        const credentials = {
+            username: user,
+            password: pass,
+            re_password: rePass
+        }
+
+        fetch('http://127.0.0.1:5055/users', {
+            method: 'POST',
+            headers: {
+                'Content-Type':'application/json'
+            },
+            body: JSON.stringify(credentials)
+        })
+        .then(resp => {
+            if(resp.ok){
+                resp.json().then(data => {
+                  console.log(data)
+                  
+                })
+            }
+        })
+    }
     
     return(
         <View style={styles.container}>
@@ -31,10 +63,13 @@ function CreateAccount() {
                     secureTextEntry={true} 
                     style={styles.textfield} 
                     placeholder={'Re-enter Password...'}
-                    value={passText}
+                    value={rePassText}
                     onChangeText={(value) => setRePassText(value)}
                 />
-                <Button title={'Create Account'}/>
+                <Button 
+                    title={'Create Account'} 
+                    onPress={() => handleSubmit(userText, passText, rePassText)}
+                />
             </View>
           </View>
         </View>

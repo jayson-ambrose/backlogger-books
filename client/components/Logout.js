@@ -2,41 +2,32 @@ import React, {useState} from 'react'
 
 // import native components here
 import { Button, StyleSheet, Text, View, TextInput } from 'react-native';
-import { Link, useRouter } from 'expo-router'
+import {useRecoilState, useSetRecoilState, useRecoilValue} from 'recoil'
+import {activeAccountAtom, loggedInAtom} from './lib/atoms'
 
-import {useSetRecoilState, useRecoilValue} from 'recoil'
-import {activeAtom, loggedInAtom} from './lib/atoms'
+function Logout({navigation}) {
 
-function Login({navigation}) {
-
-
-  const router = useRouter()
-
-  const setActiveAccount =  useSetRecoilState(activeAtom)
   const setLoggedIn = useSetRecoilState(loggedInAtom)
-
-  const activeAccount = useRecoilValue(activeAtom)
-  const loggedIn = useRecoilValue(loggedInAtom)
+  const setActiveAccount = useSetRecoilState(activeAccountAtom)
 
   function handleLogout (user) {
-    fetch('http://127.0.0.1:5055//logout', {
+    fetch('http://127.0.0.1:5055/logout', {
       method: 'DELETE'
     }).then(() => {
       setActiveAccount({})
       setLoggedIn(false)
-      router.push('/')
     })
   }
     
   return(
     <View style={styles.container}>
-        <Text>Welcome {activeAccount.username}.</Text>
+        <Text>Welcome.</Text>
         <Button color='#d64d3e' title='Logout' onPress={handleLogout}/>
     </View>
   )
 }
 
-export default Login
+export default Logout
 
 const styles = StyleSheet.create({
     container: {

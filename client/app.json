@@ -1,14 +1,10 @@
 {
   "expo": {
-    "name": "client",
-    "slug": "client",
+    "name": "proof-of-concept",
+    "slug": "proof-of-concept",
     "version": "1.0.0",
-    "scheme": "client",
     "assetBundlePatterns": [
       "**/*"
-    ],
-    "web":{
-      "bundler": "metro"
-    }
+    ]
   }
 }

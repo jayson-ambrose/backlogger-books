@@ -13,6 +13,7 @@ class Logout(Resource):
         return {}, 204
     
     def delete(self):
+        print(session['user_id'])
         session['user_id'] = None
         return {}, 204
 
@@ -107,6 +108,7 @@ class Backlogs(Resource):
 api.add_resource(Login,'/login')
 api.add_resource(Users, '/users')
 api.add_resource(Backlogs, '/backlogs')
+api.add_resource(Logout, '/logout')
 
 if __name__ == '__main__':
     app.run(port=5055, debug=True)

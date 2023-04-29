@@ -3,9 +3,13 @@ import React, {useState} from 'react'
 // import native components here
 import { Button, StyleSheet, Text, View, TextInput } from 'react-native';
 import SearchDisplay from './SearchDisplay'
+import {useRecoilState, useSetRecoilState, useRecoilValue} from 'recoil'
+import {activeAccountAtom, loggedInAtom} from './lib/atoms'
 
 function Search() {
 
+    const activeAccount = useRecoilValue(activeAccountAtom)
+    
     const [query, setQuery] = useState('')
     const [searchBy, setSearchBy] = useState('title')
     const [bookList, setBookList] = useState([])

@@ -1,4 +1,4 @@
-package com.client;
+package com.proofofconcept;
 
 import android.app.Application;
 import android.content.res.Configuration;

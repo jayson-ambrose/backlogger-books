@@ -1,18 +1,22 @@
 import React from 'react'
-
-// import native components here
 import { Button, StyleSheet, Text, View } from 'react-native';
 
-function Boiler() {
+function Home({navigation}) {
 
     return(
         <View style={styles.container}>
-            <Text>Hello World</Text>
+            <Text>Home</Text>
+            <Button 
+                title='got to test'
+                onPress={() => {
+                    navigation.navigate('Test', {})
+                }}
+            />
         </View>
     )
 }
 
-export default Boiler
+export default Home
 
 const styles = StyleSheet.create({
     container: {

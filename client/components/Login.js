@@ -1,30 +1,24 @@
 import React, {useState} from 'react'
 
 // import native components here
-import { Button, StyleSheet, Text, View, TextInput } from 'react-native';
-import { Link, useRouter } from 'expo-router'
+import { Button, StyleSheet, View, TextInput} from 'react-native';
+import {useRecoilState, useSetRecoilState, useRecoilValue} from 'recoil'
+import {activeAccountAtom, loggedInAtom} from './lib/atoms'
 
-import {useSetRecoilState, useRecoilValue} from 'recoil'
-import {activeAtom, loggedInAtom} from './lib/atoms'
 
-function Login({navigation}) {
+function Login() {
 
   const [userText, setUserText] = useState('')
   const [passText, setPassText] = useState('')
 
-  const setActiveAccount =  useSetRecoilState(activeAtom)
-  const setLoggedIn = useSetRecoilState(loggedInAtom)
-
-  const activeAccount = useRecoilValue(activeAtom)
-  const loggedIn = useRecoilValue(loggedInAtom)
-
-    function handleLogin() {
-
-      console.log(userText + ' ' +  passText)
+  const [activeAccount, setActiveAccount] = useRecoilState(activeAccountAtom)
+  const [loggedIn, setLoggedIn] = useRecoilState(loggedInAtom)
+  
+  function handleLogin(user, pass) {
       
       const credentials = {
-        username: userText,
-        password: passText
+        username: user,
+        password: pass
       }
       
       fetch('http://127.0.0.1:5055/login', {
@@ -38,12 +32,9 @@ function Login({navigation}) {
         if (resp.ok) {
           resp.json().then(data => {
 
-            console.log('made it here')
-
             setActiveAccount(data)
-
             setLoggedIn(true)
-
+            console.log(data)
           }) 
         }
 
@@ -56,9 +47,6 @@ function Login({navigation}) {
           throw error;
         });
     }
-
-    console.log(activeAccount)
-    console.log(loggedIn)
 
     return(
       <View style={styles.container}>
@@ -75,8 +63,11 @@ function Login({navigation}) {
             value={passText}
             onChangeText={(value) => setPassText(value)}
           />
-          <Button title={'Login'} onPress={handleLogin}/>
-          <Link href={'/src/CreateAccount'} style={{color: 'blue'}}>Create Account</Link>
+          <Button 
+            title={'Login'} 
+            onPress={() => handleLogin(userText, passText)}
+          />
+
       </View>
     )
 }
