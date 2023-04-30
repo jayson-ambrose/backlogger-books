@@ -1,7 +1,6 @@
 from flask import request, make_response, session
 from flask_restful import Resource
 from sqlalchemy.exc import IntegrityError
-
 from config import app, db, api
 from models import User, Review, Backlog, Book
 
@@ -32,7 +31,9 @@ class Login(Resource):
             print('made it here')
             print(session['user_id'])
 
-            return make_response(user.to_dict(), 200)
+            return make_response(user.to_dict(rules=("-reviews.book.users", "reviews.book", "-reviews.book.users",
+                                                     "-reviews.book.reviews", "-reviews.book.backlogs",
+                                                     "-reviews.book.")), 200)
         
         except:
             return make_response( {'error': '401 user not found or incorrect password'}, 401)
@@ -41,7 +42,9 @@ class Users(Resource):
     def get(self):
         user_list = []
         for user in User.query.all():
-            user_list.append(user.to_dict())
+            user_list.append(user.to_dict(rules=("-reviews.book.users", "reviews.book", "-reviews.book.users",
+                                                 "-reviews.book.reviews", "-reviews.book.backlogs",
+                                                 "-reviews.book.")))
 
         return make_response(user_list, 200)
     
@@ -55,7 +58,9 @@ class Users(Resource):
         try:
             db.session.add(user)
             db.session.commit()
-            return make_response(user.to_dict(), 201)
+            return make_response(user.to_dict(rules=("-reviews.book.users", "reviews.book", "-reviews.book.users",
+                                                 "-reviews.book.reviews", "-reviews.book.backlogs",
+                                                 "-reviews.book.")), 201)
         except IntegrityError:
             db.session.rollback()
             return make_response({'error': 'error 400: Username already taken!'}, 400)

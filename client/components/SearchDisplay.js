@@ -14,7 +14,7 @@ function SearchDisplay({ bookList, navigation }) {
                 <Text>{isbn} </Text>
                 <Text> </Text>
                 <Image 
-                    source={{uri: `https://covers.openlibrary.org/b/isbn/${isbn}-S.jpg`}}
+                    source={{uri: `https://covers.openlibrary.org/b/isbn/${isbn}-L.jpg`}}
                     style={styles.cover}
                 />
                 <Button 

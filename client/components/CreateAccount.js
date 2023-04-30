@@ -1,45 +1,43 @@
 import React, {useState} from 'react'
 
 // import native components here
-import { Button, StyleSheet, Text, View, TextInput} from 'react-native';
+import { Button, StyleSheet, Text, View, TextInput,} from 'react-native';
+import { useSetRecoilState } from 'recoil';
+import { activeAccountAtom,loggedInAtom } from './lib/atoms';
 
-function CreateAccount() {
+function CreateAccount({ navigation }) {
 
-    const router = useRouter()
-    const {handleLogin} = useSearchParams()
+  const setActiveAccount = useSetRecoilState(activeAccountAtom)
+  const setLoggedIn = useSetRecoilState(loggedInAtom)
 
-    console.log(handleLogin)
+  const [userText, setUserText] = useState('')
+  const [passText, setPassText] = useState('')
+  const [rePassText, setRePassText] = useState('')
 
-    const [userText, setUserText] = useState('')
-    const [passText, setPassText] = useState('')
-    const [rePassText, setRePassText] = useState('')  
+  function handleSubmit(user, pass, rePass) {
     
-    
-    
-    function handleSubmit(user, pass, rePass) {
-
-        const credentials = {
-            username: user,
-            password: pass,
-            re_password: rePass
-        }
-
-        fetch('http://127.0.0.1:5055/users', {
-            method: 'POST',
-            headers: {
-                'Content-Type':'application/json'
-            },
-            body: JSON.stringify(credentials)
-        })
-        .then(resp => {
-            if(resp.ok){
-                resp.json().then(data => {
-                  console.log(data)
-                  
-                })
-            }
-        })
-    }
+      const credentials = {
+         username: user,
+          password: pass,
+          re_password: rePass
+      }
+      fetch('http://127.0.0.1:5055/users', {
+          method: 'POST',
+          headers: {
+              'Content-Type':'application/json'
+          },
+          body: JSON.stringify(credentials)
+      })
+      .then(resp => {
+          if(resp.ok){
+              resp.json().then(data => {
+                setActiveAccount(data)
+                setLoggedIn(true)
+                navigation.navigate('LandingScreen')                
+              })
+          }
+      })
+  }
     
     return(
         <View style={styles.container}>
@@ -85,6 +83,12 @@ const styles = StyleSheet.create({
       padding: 24,
       backgroundColor: '#2c666f',
     },
+    containertwo: {
+      flex: 1,
+      backgroundColor: '#73b4ca',
+      alignItems: 'center',
+      justifyContent: 'center',
+    },   
     main: {
       flex: 1,
       justifyContent: "center",
@@ -96,22 +100,12 @@ const styles = StyleSheet.create({
       fontWeight: "bold",
       color: '#fff'
     },
-    subtitle: {
-      fontSize: 36,
-      color: "#38434D",
-    },
     textfield: {
         backgroundColor: '#fff',
         width: 300,
         borderWidth: 2,
         paddingLeft: 10,
         marginBottom: 5
-      },
-    containertwo: {
-      flex: 1,
-      backgroundColor: '#73b4ca',
-      alignItems: 'center',
-      justifyContent: 'center',
-    }      
+      }   
   });
    

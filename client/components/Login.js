@@ -1,18 +1,16 @@
 import React, {useState} from 'react'
-
-// import native components here
-import { Button, StyleSheet, View, TextInput} from 'react-native';
+import { Button, Text,  StyleSheet, View, TextInput, Pressable} from 'react-native';
 import {useRecoilState, useSetRecoilState, useRecoilValue} from 'recoil'
 import {activeAccountAtom, loggedInAtom} from './lib/atoms'
 
 
-function Login() {
+function Login({navigation}) {
 
   const [userText, setUserText] = useState('')
   const [passText, setPassText] = useState('')
 
-  const [activeAccount, setActiveAccount] = useRecoilState(activeAccountAtom)
-  const [loggedIn, setLoggedIn] = useRecoilState(loggedInAtom)
+  const setActiveAccount = useSetRecoilState(activeAccountAtom)
+  const setLoggedIn = useSetRecoilState(loggedInAtom)
   
   function handleLogin(user, pass) {
       
@@ -67,6 +65,9 @@ function Login() {
             title={'Login'} 
             onPress={() => handleLogin(userText, passText)}
           />
+          <Pressable onPress={() => navigation.navigate('CreateAccount')}>
+            <Text>Create Account</Text>
+          </Pressable>
 
       </View>
     )

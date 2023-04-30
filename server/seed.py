@@ -36,7 +36,7 @@ if __name__ == '__main__':
 
         r1 = Review(rating=7, review_text='Taco salad is delicious, so is this book', user_id=1, book_id=2)
         r2 = Review(rating=3, review_text='I dont know about this one', user_id=4, book_id=2)
-        r3 = Review(rating=5, review_text='Im sure this one was okay', user_id=1, book_id=2)
+        r3 = Review(rating=5, review_text='Im sure this one was okay', user_id=1, book_id=3)
 
         reviews = [r1, r2, r3]
 

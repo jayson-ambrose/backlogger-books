@@ -22,7 +22,7 @@ export default function App() {
       <NavigationContainer>
           <Stack.Navigator>
             <Stack.Screen 
-              name = 'Landing Screen'
+              name = 'LandingScreen'
               component ={LandingScreen}
               options={{title: 'Home Screen'}}
             />
@@ -51,7 +51,7 @@ export default function App() {
               component ={Test}
               options={{title: 'Test'}}
             />
-          </Stack.Navigator>        
+          </Stack.Navigator>      
       </NavigationContainer>
     </RecoilRoot>
   );
