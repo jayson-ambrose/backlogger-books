@@ -6,6 +6,7 @@ import CreateAccount from './components/CreateAccount'
 import Search from './components/Search'
 import Test from './components/Test'
 import Details from './components/Details'
+import AccountDetails from './components/AccountDetails'
 
 import {RecoilRoot} from 'recoil'
 
@@ -38,12 +39,17 @@ export default function App() {
             <Stack.Screen 
               name = 'Details'
               component ={Details}
+              options={{title: 'Details'}}
+            />
+            <Stack.Screen 
+              name = 'AccountDetails'
+              component ={AccountDetails}
               options={{title: 'Welcome'}}
             />
             <Stack.Screen 
               name = 'Test'
               component ={Test}
-              options={{title: 'Welcome'}}
+              options={{title: 'Test'}}
             />
           </Stack.Navigator>        
       </NavigationContainer>

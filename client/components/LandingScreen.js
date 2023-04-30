@@ -16,7 +16,7 @@ export default function LandingScreen({navigation}) {
         <Text style={styles.title}>Backlogger Books</Text>
         {loggedIn ? <Logout />: <Login /> }      
         <Button title={'Backlog'}/>
-        <Button title={'Account Details'}/>
+        <Button title={'Account Details'} onPress={() => navigation.navigate('AccountDetails')}/>
         <Button title={'Search'} onPress={() => navigation.navigate('Search')}/>
         <Button title={'Scan Barcode'}/>
       </View>              

@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 
 // import native components here
-import { Button, StyleSheet, Text, View, TextInput } from 'react-native';
+import { Button, StyleSheet, Text, View, TextInput, SectionList } from 'react-native';
 import SearchDisplay from './SearchDisplay'
 import {useRecoilState, useSetRecoilState, useRecoilValue} from 'recoil'
 import {activeAccountAtom, loggedInAtom} from './lib/atoms'
