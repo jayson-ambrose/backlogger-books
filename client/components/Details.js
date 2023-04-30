@@ -13,4 +13,6 @@ function Details({route, navigation}) {
 
 }
 
+//github you monster
+
 export default Details
