@@ -10,6 +10,7 @@ import ScanBarcode from './components/ScanBarcode'
 import Details from './components/Details'
 import AccountDetails from './components/AccountDetails'
 import Backlog from './components/Backlog'
+import Reviews from './components/Reviews'
 
 const Stack = createNativeStackNavigator()
 
@@ -52,6 +53,11 @@ export default function App() {
               name = 'Backlog'
               component ={Backlog}
               options={{title: 'Backlog'}}
+            />
+            <Stack.Screen 
+              name = 'Reviews'
+              component ={Reviews}
+              options={{title: 'Reviews'}}
             />
           </Stack.Navigator>      
       </NavigationContainer>

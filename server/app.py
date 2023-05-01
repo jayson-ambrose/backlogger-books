@@ -92,16 +92,24 @@ class Books(Resource):
                 return make_response({'error': 'error 400: Book does not exist and invalid data provided.'})
 
 class BooksById(Resource):
-    #get book details from backend by isbn (used by backlog not search)
-    pass
+    def get(self, id):
+        book = Book.query.filter(Book.id == id).one_or_none()
+        return make_response(book.to_dict(only=('title', 'id', 'isbn', 'author')), 200)
 
 class Reviews(Resource):
     #get all reviews
     pass
 
 class ReviewsByBookId(Resource):
-    #get reviews by book id
-    pass
+    def get(self, id):
+        book = Book.query.filter(Book.id == id).one_or_none()
+        reviews_list = []
+        for review in book.reviews:
+            reviews_list.append(review.to_dict(only=('review_text', 'rating', 'id', 
+                                                     'user', '-user.reviews', '-user.backlogs')))
+        if len(reviews_list) <= 0:
+            return make_response({"error":"error 404: No reviews found for book"})
+        return make_response(reviews_list, 200)
 
 class Backlogs(Resource):
     
@@ -139,6 +147,7 @@ api.add_resource(Users, '/users')
 api.add_resource(Backlogs, '/backlogs')
 api.add_resource(Logout, '/logout')
 api.add_resource(Books, '/books')
+api.add_resource(ReviewsByBookId, '/books/<int:id>/reviews')
 
 if __name__ == '__main__':
     app.run(port=5055, debug=True)

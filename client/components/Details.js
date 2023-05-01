@@ -59,7 +59,7 @@ function Details({route, navigation}) {
     return(
       <View style={styles.container}>
         <Image 
-            source={{uri: `https://covers.openlibrary.org/b/isbn/${route.params.isbn}-L.jpg`}}
+            source={{uri: `https://covers.openlibrary.org/b/isbn/${isbn}-L.jpg`}}
             style={styles.cover}
         />
         <Text style={styles.title}>{title}</Text>
@@ -67,7 +67,7 @@ function Details({route, navigation}) {
         <Text>{isbn}</Text>
         {backlogButton}
          
-        <Button title="Read Reviews"/>
+        <Button title="Reviews" onPress={() => navigation.navigate('Reviews', {isbn: isbn, title: title, author: author})}/>
         
       </View>
     )
