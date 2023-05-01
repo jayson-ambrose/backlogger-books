@@ -7,7 +7,7 @@ function BacklogDisplay({ backlogList, navigation }) {
 
     const displayBacklogs = backlogList.map((backlog) => {
 
-        const {title, author, isbn} = backlog.book
+        const {title, author, isbn, id} = backlog.book
 
         return (
             <View key={isbn}>
@@ -21,7 +21,7 @@ function BacklogDisplay({ backlogList, navigation }) {
                 />
                 <Button 
                     title={'See Details'}
-                    onPress={() => navigation.navigate('Details', {isbn: isbn, title: title, author: author})}
+                    onPress={() => navigation.navigate('Details', {isbn: isbn, title: title, author: author, id: id})}
                 />
                 <Text/>
             </View>

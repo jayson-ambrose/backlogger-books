@@ -15,8 +15,7 @@ function Details({route, navigation}) {
             isbn: isbn,
             title: title,
             author: author,
-            user_id: activeAccount.id
-        }
+            user_id: activeAccount.id}
 
         fetch('http://127.0.0.1:5055/backlogs', {
             method: 'POST',

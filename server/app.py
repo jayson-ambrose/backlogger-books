@@ -97,8 +97,11 @@ class BooksById(Resource):
         return make_response(book.to_dict(only=('title', 'id', 'isbn', 'author')), 200)
 
 class Reviews(Resource):
-    #get all reviews
-    pass
+    def get(self):
+        reviews_list = []
+        for review in Review.query.all():
+            reviews_list.append(review.to_dict(only=('review_text', 'rating', 'id', 
+                                                     'user', '-user.reviews', '-user.backlogs')))
 
 class ReviewsByBookId(Resource):
     def get(self, id):
