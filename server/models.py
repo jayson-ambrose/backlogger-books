@@ -46,6 +46,8 @@ class User(db.Model, SerializerMixin):
 class Book(db.Model, SerializerMixin):
     __tablename__ = 'books'
 
+    serialize_rules = ('-created_at', '-updated_at')
+
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String)
     author = db.Column(db.String)

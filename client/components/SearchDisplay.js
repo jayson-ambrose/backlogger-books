@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
     },
     cover: {
-        height: 80,
+        height: 85,
         width: 55
     },
     title: {

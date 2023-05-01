@@ -2,7 +2,7 @@ import { atom } from "recoil";
 
 export const activeAccountAtom = atom({
     key: 'activeKey',
-    default: {},
+    default: null,
 })
 
 export const loggedInAtom = atom ({

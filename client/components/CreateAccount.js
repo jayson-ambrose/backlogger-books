@@ -1,7 +1,5 @@
 import React, {useState} from 'react'
-
-// import native components here
-import { Button, StyleSheet, Text, View, TextInput,} from 'react-native';
+import { Button, StyleSheet, Text, View, TextInput, Alert} from 'react-native';
 import { useSetRecoilState } from 'recoil';
 import { activeAccountAtom,loggedInAtom } from './lib/atoms';
 
@@ -36,9 +34,12 @@ function CreateAccount({ navigation }) {
                 navigation.navigate('LandingScreen')                
               })
           }
+          else {
+            Alert.alert("Account Creation Failed", "Username already taken or invalid")
+          }
       })
   }
-    
+
     return(
         <View style={styles.container}>
           <View style={styles.main}>

@@ -58,15 +58,42 @@ class Users(Resource):
         try:
             db.session.add(user)
             db.session.commit()
+
+            session['user_id'] = user.id
+            print(session['user_id'])
             return make_response(user.to_dict(rules=("-reviews.book.users", "reviews.book", "-reviews.book.users",
                                                  "-reviews.book.reviews", "-reviews.book.backlogs",
                                                  "-reviews.book.")), 201)
         except IntegrityError:
             db.session.rollback()
-            return make_response({'error': 'error 400: Username already taken!'}, 400)
+            return make_response({'error': 'error 400: Username already taken.'}, 400)
         
 
+class Books(Resource):
+
+    def get(self):
+        bookList = []
+        for book in Book.query.all():
+            bookList.append(book.to_dict(rules={'-users', '-reviews', '-backlogs'}))
+
+        return make_response(bookList, 200)
     
+    def post(self):
+        req = request.get_json()
+
+        book = Book.query.filter(Book.isbn == req['isbn']).one_or_none()
+        if not book:
+            book = Book(title={req['title']}, author={req['author']}, isbn={req['isbn']})
+            try:
+                db.session.add(book)
+                db.session.commit()
+                user = User.query.filter(User.id == req['user_id']).one_or_none()
+                return make_response(user.to_dict(rules=("-reviews.book.users", "reviews.book", "-reviews.book.users",
+                                                 "-reviews.book.reviews", "-reviews.book.backlogs",
+                                                 "-reviews.book.")), 201)
+            except:
+                return make_response({'error': 'error 400: Book does not exist and invalid data provided.'})
+
 class BooksById(Resource):
     #get book details from backend by isbn (used by backlog not search)
     pass
@@ -114,6 +141,7 @@ api.add_resource(Login,'/login')
 api.add_resource(Users, '/users')
 api.add_resource(Backlogs, '/backlogs')
 api.add_resource(Logout, '/logout')
+api.add_resource(Books, '/books')
 
 if __name__ == '__main__':
     app.run(port=5055, debug=True)

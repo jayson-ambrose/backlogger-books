@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import { Button, Text,  StyleSheet, View, TextInput, Pressable} from 'react-native';
+import { Button, Text,  StyleSheet, View, TextInput, Pressable, Alert} from 'react-native';
 import {useRecoilState, useSetRecoilState, useRecoilValue} from 'recoil'
 import {activeAccountAtom, loggedInAtom} from './lib/atoms'
 
@@ -35,13 +35,15 @@ function Login({navigation}) {
             console.log(data)
           }) 
         }
+        else{
+          Alert.alert("Login Failed", "Username or password did not match our records.")
+        }
 
         setUserText('')
         setPassText('')
 
       }).catch(function(error) {
-        console.log('There has been a problem with your fetch operation: ' + error.message);
-         // ADD THIS THROW error
+          console.log('There has been a problem with your fetch operation: ' + error.message);          
           throw error;
         });
     }

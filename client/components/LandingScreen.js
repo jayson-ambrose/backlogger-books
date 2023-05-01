@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Button } from "react-native";
+import { StyleSheet, Text, View, Button, Alert } from "react-native";
 import React from 'react'
 import {useRecoilState, useSetRecoilState, useRecoilValue} from 'recoil'
 import {activeAccountAtom, loggedInAtom} from './lib/atoms'
@@ -10,15 +10,49 @@ export default function LandingScreen({navigation}) {
     
     const loggedIn = useRecoilValue(loggedInAtom)
 
+    let accountDetailsButton = (
+
+      <Button
+        title={'Account Details'}
+        color='#adc6ec'
+        onPress={() => Alert.alert("Log in to view account details")}
+      />)
+
+    let backlogButton = (
+      <Button 
+        title={'Backlog'}
+        color='#adc6ec'
+        onPress={() => Alert.alert("Log in to view your backlog")}
+      />)    
+
+    if (loggedIn){
+      accountDetailsButton = (
+        <Button 
+          title={'Account Details'} 
+          onPress={() => navigation.navigate('AccountDetails')}
+        />)
+
+        //set up backlog button here
+      backlogButton = (
+        <Button title={'Backlog'}/>
+      )
+    }
+
   return (
     <View style={styles.container}>
       <View style={styles.main}>
         <Text style={styles.title}>Backlogger Books</Text>
-        {loggedIn ? <Logout />: <Login navigation={navigation}/> }      
-        <Button title={'Backlog'}/>
-        <Button title={'Account Details'} onPress={() => navigation.navigate('AccountDetails')}/>
-        <Button title={'Search'} onPress={() => navigation.navigate('Search')}/>
-        <Button title={'Scan Barcode'}/>
+        {loggedIn ? <Logout />: <Login navigation={navigation}/> }
+        {accountDetailsButton}
+        {backlogButton}
+        <Button 
+          title={'Search'} 
+          onPress={() => navigation.navigate('Search')}        
+        />
+        <Button 
+          title={'Scan Barcode'} 
+          onPress={() => navigation.navigate('ScanBarcode')}
+        />
       </View>              
     </View>     
   );

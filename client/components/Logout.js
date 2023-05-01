@@ -10,11 +10,11 @@ function Logout({navigation}) {
   const setLoggedIn = useSetRecoilState(loggedInAtom)
   const setActiveAccount = useSetRecoilState(activeAccountAtom)
 
-  function handleLogout (user) {
+  function handleLogout () {
     fetch('http://127.0.0.1:5055/logout', {
       method: 'DELETE'
     }).then(() => {
-      setActiveAccount({})
+      setActiveAccount(null)
       setLoggedIn(false)
     })
   }
