@@ -42,8 +42,7 @@ class Users(Resource):
     def get(self):
         user_list = []
         for user in User.query.all():
-            user_list.append(user.to_dict(rules=("reviews.book", "-reviews.book.reviews",
-                                                 "-reviews.book.backlogs", "-reviews.book.")))
+            user_list.append(user.to_dict())
 
         return make_response(user_list, 200)
     
@@ -60,9 +59,8 @@ class Users(Resource):
 
             session['user_id'] = user.id
             print(session['user_id'])
-            return make_response(user.to_dict(rules=("-reviews.book.users", "reviews.book", "-reviews.book.users",
-                                                 "-reviews.book.reviews", "-reviews.book.backlogs",
-                                                 "-reviews.book.")), 201)
+            return make_response(user.to_dict(rules=("reviews.book",)), 201)
+        
         except IntegrityError:
             db.session.rollback()
             return make_response({'error': 'error 400: Username already taken.'}, 400)
@@ -89,9 +87,7 @@ class Books(Resource):
                 db.session.add(book)
                 db.session.commit()
                 
-                return make_response(user.to_dict(rules=("-reviews.book.users", "reviews.book", "-reviews.book.users",
-                                                 "-reviews.book.reviews", "-reviews.book.backlogs",
-                                                 "-reviews.book.")), 201)
+                return make_response(book.to_dict(only=('title', 'id', 'isbn', 'author')), 201)
             except:
                 return make_response({'error': 'error 400: Book does not exist and invalid data provided.'})
 
@@ -108,32 +104,32 @@ class ReviewsByBookId(Resource):
     pass
 
 class Backlogs(Resource):
-
-    #backlog post should send in object {
-    # user_id
-    # isbn
-    # title
-    # author
-    # }
-
+    
     def post(self):
         req_data = request.get_json()
         book = Book.query.filter(Book.isbn == req_data['isbn']).one_or_none()
-        if not book:
-            new_book = Book(title = req_data['title'], author = req_data['author'], isbn = req_data['isbn'])
-            try:
-                db.session.add(new_book)
-                db.session.commit()
 
-                book = Book.query.filter(Book.isbn == req_data['isbn'].one_or_none())
+        if not book:
+            
+            book = Book(title = req_data['title'], author = req_data['author'], isbn = req_data['isbn'])
+            try:
+                print(book, book.title, book.author, book.isbn)
+                db.session.add(book)
+                db.session.commit()
             except:
-                return make_response({"error": "something went wrong on our end"}, 500)
+                return make_response({"error": "something went wrong on our end while building book"}, 500)
             
         backlog = Backlog(completed=0, user_id=req_data['user_id'], book_id=book.id)
-        try:
+        user = User.query.filter(User.id == req_data['user_id']).one_or_none()
+
+        if book in user.books_backlogged:
+            return make_response({"error": "book already backlogged"}, 400)
+
+        try:            
             db.session.add(backlog)
-            db.session.commit()
-            return make_response(backlog.to_dict(only={'user.id', 'completed'}), 201)
+            db.session.commit()            
+
+            return make_response(user.to_dict(), 201)
 
         except:
             return make_response({"error": "something went wrong"}, 400)

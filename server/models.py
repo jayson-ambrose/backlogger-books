@@ -24,7 +24,7 @@ class User(db.Model, SerializerMixin):
     backlogs = db.relationship('Backlog', backref='user')
 
     books_reviewed = association_proxy('reviews', 'books')
-    books_backlogged = association_proxy('backlogs', 'books')
+    books_backlogged = association_proxy('backlogs', 'book')
 
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
@@ -87,6 +87,9 @@ class Backlog(db.Model, SerializerMixin):
 
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
+
+
+
 
 
 

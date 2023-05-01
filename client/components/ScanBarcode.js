@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { StyleSheet, Text, View, Button } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner'
 
-function Test({navigation}) {
+function ScanBarcode({navigation}) {
 
     const [hasPermission, setHasPermission] = useState(null)
     const [scanned, setScanned] = useState(false)
@@ -39,7 +39,7 @@ function Test({navigation}) {
     )
 }
 
-export default Test
+export default ScanBarcode
 
 const styles = StyleSheet.create({
     container: {

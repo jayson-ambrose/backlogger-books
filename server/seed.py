@@ -21,9 +21,9 @@ if __name__ == '__main__':
         Review.query.delete()
         Backlog.query.delete()
 
-        b1 = Book(title='Booktime', author='Dudman Jr', isbn='1357845638')
-        b2 = Book(title='Tacos', author='Pooboot', isbn='1354843216')
-        b3 = Book(title='Burritos', author='Durganisom Tomison', isbn='13545421')
+        b1 = Book(title='Good Omens', author='Neil Gaiman', isbn='9783492285056')
+        b2 = Book(title='The Hunger of the Gods', author='John Gwynne', isbn='0316539929')
+        b3 = Book(title='Children of Time', author='Adrian Tchaikovsky', isbn='9781447273295')
 
         books = [b1, b2, b3]
 
@@ -34,7 +34,7 @@ if __name__ == '__main__':
 
         users = [u1, u2, u3, u4]
 
-        r1 = Review(rating=7, review_text='Taco salad is delicious, so is this book', user_id=1, book_id=2)
+        r1 = Review(rating=9, review_text='A masterpiece written by two of the finest authors in modern fiction', user_id=1, book_id=1)
         r2 = Review(rating=3, review_text='I dont know about this one', user_id=4, book_id=2)
         r3 = Review(rating=5, review_text='Im sure this one was okay', user_id=1, book_id=3)
 
