@@ -9,9 +9,10 @@ class User(db.Model, SerializerMixin):
     __tablename__ = 'users'
 
     serialize_rules = ("-created_at", "-updated_at", '-password',
-                       '-backlogs.user', '-reviews.user', '-books_reviewed.user',
-                       '-books_backlogged.user', '-backlogs.book', '-reviews.book',
-                       '-_password')
+                       '-backlogs.user', '-reviews.user', '-reviews.book',
+                       '-books_backlogged.user', '-_password', '-backlogs.book.users',
+                       '-backlogs.book.reviews', '-backlogs.book.backlogs', 
+                       '-reviews.book.reviews', '-reviews.book.backlogs')
 
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String, nullable=False, unique=True)

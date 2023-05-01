@@ -42,9 +42,8 @@ class Users(Resource):
     def get(self):
         user_list = []
         for user in User.query.all():
-            user_list.append(user.to_dict(rules=("-reviews.book.users", "reviews.book", "-reviews.book.users",
-                                                 "-reviews.book.reviews", "-reviews.book.backlogs",
-                                                 "-reviews.book.")))
+            user_list.append(user.to_dict(rules=("reviews.book", "-reviews.book.reviews",
+                                                 "-reviews.book.backlogs", "-reviews.book.")))
 
         return make_response(user_list, 200)
     
@@ -81,13 +80,15 @@ class Books(Resource):
     def post(self):
         req = request.get_json()
 
+        user = User.query.filter(User.id == req['user_id']).one_or_none()
         book = Book.query.filter(Book.isbn == req['isbn']).one_or_none()
+        
         if not book:
             book = Book(title={req['title']}, author={req['author']}, isbn={req['isbn']})
             try:
                 db.session.add(book)
                 db.session.commit()
-                user = User.query.filter(User.id == req['user_id']).one_or_none()
+                
                 return make_response(user.to_dict(rules=("-reviews.book.users", "reviews.book", "-reviews.book.users",
                                                  "-reviews.book.reviews", "-reviews.book.backlogs",
                                                  "-reviews.book.")), 201)

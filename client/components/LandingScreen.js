@@ -15,27 +15,23 @@ export default function LandingScreen({navigation}) {
       <Button
         title={'Account Details'}
         color='#adc6ec'
-        onPress={() => Alert.alert("Log in to view account details")}
-      />)
+        onPress={() => Alert.alert("Log in to view account details")}/>)
 
     let backlogButton = (
       <Button 
         title={'Backlog'}
         color='#adc6ec'
-        onPress={() => Alert.alert("Log in to view your backlog")}
-      />)    
+        onPress={() => Alert.alert("Log in to view your backlog")}/>)    
 
     if (loggedIn){
       accountDetailsButton = (
         <Button 
           title={'Account Details'} 
-          onPress={() => navigation.navigate('AccountDetails')}
-        />)
+          onPress={() => navigation.navigate('AccountDetails')}/>)
 
-        //set up backlog button here
       backlogButton = (
-        <Button title={'Backlog'}/>
-      )
+        <Button title={'Backlog'}
+        onPress={() => navigation.navigate('Backlog')}/>)
     }
 
   return (

@@ -9,6 +9,7 @@ import Search from './components/Search'
 import ScanBarcode from './components/ScanBarcode'
 import Details from './components/Details'
 import AccountDetails from './components/AccountDetails'
+import Backlog from './components/Backlog'
 
 const Stack = createNativeStackNavigator()
 
@@ -46,6 +47,11 @@ export default function App() {
               name = 'ScanBarcode'
               component ={ScanBarcode}
               options={{title: 'ScanBarcode'}}
+            />
+            <Stack.Screen 
+              name = 'Backlog'
+              component ={Backlog}
+              options={{title: 'Backlog'}}
             />
           </Stack.Navigator>      
       </NavigationContainer>

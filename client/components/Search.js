@@ -2,8 +2,8 @@ import React, { useState, useRef } from 'react'
 import {Picker} from '@react-native-picker/picker'
 import { Button, StyleSheet, Text, View, TextInput, SectionList } from 'react-native'
 import SearchDisplay from './SearchDisplay'
-import {useRecoilState, useSetRecoilState, useRecoilValue} from 'recoil'
-import {activeAccountAtom, loggedInAtom} from './lib/atoms'
+import { useRecoilValue } from 'recoil'
+import { activeAccountAtom } from './lib/atoms'
 
 
 function Search({navigation}) {
@@ -24,14 +24,15 @@ function Search({navigation}) {
 
             const books = []
             data.docs.forEach((item) => {
-                console.log(item.isbn?.length)                
+
                 if (item.title != undefined && item.isbn?.length != undefined && item.author_name?.length != undefined) {
 
-                    book_object = {
+                    const book_object = {
                         title: item?.title,
                         isbn: item?.isbn[0],
                         author: item?.author_name[0]
                     }
+
                     books.push(book_object)                
                 }
             })
