@@ -28,7 +28,6 @@ class Login(Resource):
                 return make_response({"error":"wrong password"}, 401) 
                       
             session['user_id'] = user.id
-            print('made it here')
             print(session['user_id'])
 
             return make_response(user.to_dict(), 200)
@@ -61,7 +60,14 @@ class Users(Resource):
         
         except IntegrityError:
             db.session.rollback()
-            return make_response({'error': 'error 400: Username already taken.'}, 400)        
+            return make_response({'error': 'error 400: Username already taken.'}, 400) 
+
+class UsersById(Resource):
+    def get(self, id):
+        user = User.query.filter(User.id == id).one_or_none()
+        if user:
+            return make_response(user.to_dict())
+        return make_response({"error": "error 404: user not found"}, 404)               
 
 class Books(Resource):
 
@@ -112,6 +118,29 @@ class ReviewsByBookId(Resource):
         if len(reviews_list) <= 0:
             return make_response({"error":"error 404: No reviews found for this book"}, 404)
         return make_response(reviews_list, 200)
+    
+    def post(self, id):
+
+        req = request.get_json()
+
+        print(req)
+
+        rev_user = User.query.filter(User.id == req['user_id']).one_or_none()
+        rev_book = Book.query.filter(Book.id == id).one_or_none() 
+
+        try:
+            new_review = Review(rating=req['rating'], review_text=req['text'], user=rev_user, book=rev_book)
+
+            db.session.add(new_review)
+            print('before submit')
+            db.session.commit()
+            print('after submit')
+
+            return(new_review.to_dict(only=('review_text', 'rating', 'id', 
+                                            'user', '-user.reviews', '-user.backlogs')), 201)            
+
+        except:
+            return make_response({'error': '400: somethings not right'}, 400)    
 
 class Backlogs(Resource):
 

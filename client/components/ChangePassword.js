@@ -3,12 +3,12 @@ import { Button, StyleSheet, Text, View, TextInput, Alert} from 'react-native';
 import { useSetRecoilState } from 'recoil';
 import { activeAccountAtom,loggedInAtom } from './lib/atoms';
 
-function CreateAccount({ navigation }) {
+function ChangePassword({ navigation }) {
 
   const setActiveAccount = useSetRecoilState(activeAccountAtom)
   const setLoggedIn = useSetRecoilState(loggedInAtom)
 
-  const [userText, setUserText] = useState('')
+  const [oldPassText, setOldPassText] = useState('')
   const [passText, setPassText] = useState('')
   const [rePassText, setRePassText] = useState('')
 
@@ -44,37 +44,38 @@ function CreateAccount({ navigation }) {
         <View style={styles.container}>
           <View style={styles.main}>
             <View style={styles.containertwo}>
-              <TextInput 
-                style={styles.textfield}
-                placeholder={'Enter Username...'}
-                value={userText}
-                onChangeText={(value) => setUserText(value)}
-              />
-              <TextInput 
-                secureTextEntry={true} 
-                style={styles.textfield} 
-                placeholder={'Enter Password...'}
-                value={passText}
-                onChangeText={(value) => setPassText(value)}
-              />
-              <TextInput 
-                secureTextEntry={true} 
-                style={styles.textfield} 
-                placeholder={'Re-enter Password...'}
-                value={rePassText}
-                onChangeText={(value) => setRePassText(value)}
-              />
-              <Button 
-                title={'Create Account'} 
-                onPress={() => handleSubmit(userText, passText, rePassText)}
-              />
+                <TextInput 
+                    secureTextEntry={true} 
+                    style={styles.textfield}
+                    placeholder={'Enter current password...'}
+                    value={passText}
+                    onChangeText={(value) => setOldPassText(value)}
+                />
+                <TextInput 
+                    secureTextEntry={true} 
+                    style={styles.textfield} 
+                    placeholder={'Enter password...'}
+                    value={passText}
+                    onChangeText={(value) => setPassText(value)}
+                />
+                <TextInput 
+                    secureTextEntry={true} 
+                    style={styles.textfield} 
+                    placeholder={'Re-enter password...'}
+                    value={rePassText}
+                    onChangeText={(value) => setRePassText(value)}
+                />
+                <Button 
+                    title={'Change Password'} 
+                    onPress={() => handleSubmit(userText, passText, rePassText)}
+                />
             </View>
           </View>
         </View>
     )
 }
 
-export default CreateAccount
+export default ChangePassword
 
 const styles = StyleSheet.create({
     container: {

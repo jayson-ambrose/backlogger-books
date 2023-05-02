@@ -11,7 +11,8 @@ import Details from './components/Details'
 import AccountDetails from './components/AccountDetails'
 import Backlog from './components/Backlog'
 import Reviews from './components/Reviews'
-import WriteReview from './components/WriteReview';
+import WriteReview from './components/WriteReview'
+import ChangePassword from './components/ChangePassword'
 
 const Stack = createNativeStackNavigator()
 
@@ -43,7 +44,7 @@ export default function App() {
             <Stack.Screen 
               name = 'AccountDetails'
               component ={AccountDetails}
-              options={{title: 'Welcome'}}
+              options={{title: 'Account Details'}}
             />
             <Stack.Screen 
               name = 'ScanBarcode'
@@ -65,6 +66,11 @@ export default function App() {
               component ={WriteReview}
               options={{title: 'Write Review'}}
             />
+            <Stack.Screen 
+              name = 'ChangePassword'
+              component ={ChangePassword}
+              options={{title: 'Change Password'}}
+            />            
           </Stack.Navigator>      
       </NavigationContainer>
     </RecoilRoot>

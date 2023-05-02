@@ -18,11 +18,15 @@ function AccountDetails({navigation}) {
 
     return(
         <View style={styles.container}>
-            <Text>Account Details</Text>
-            <Text>{activeAccount.username}</Text>
+            <Text style={styles.title}>{activeAccount.username}</Text>
             <Text>{activeAccount.favorite_book ? activeAccount.favorite_book : "No book selected"}</Text>
             <Text>{activeAccount.favorite_author ? activeAccount.favorite_author : "No author selected"}</Text>
+            <Button 
+            title='Change Password'
+            onPress={() => navigation.navigate('ChangePassword')}/>
+            <Button color='#d64d3e' title='Delete Account'/>
             <Text>Books Reviewed({numBooksReviewed}):</Text>
+
             {booksReviewed}
         </View>)}
 
@@ -35,5 +39,9 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       justifyContent: 'center',
     },
+    title: {
+        fontSize: 20,
+        fontWeight: 'bold'
+    }
   });
    

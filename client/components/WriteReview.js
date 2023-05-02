@@ -1,15 +1,42 @@
 import React, { useState, useEffect } from 'react'
 import { Button, StyleSheet, Text, View, TextInput } from 'react-native';
-import {Picker} from '@react-native-picker/picker'
+import { Picker } from '@react-native-picker/picker'
+import { useRecoilValue} from 'recoil'
+import { activeAccountAtom, bookAtom } from './lib/atoms';
 
 function WriteReview({ navigation }) {
 
     const [textField, setTextField] = useState('')
     const [rating, setRating] = useState(5)
 
+    const reviewBook = useRecoilValue(bookAtom)
+    const activeAccount= useRecoilValue(activeAccountAtom)
+
+    reviewPayload = {
+        user_id: activeAccount.id,
+        text: textField,
+        rating: rating,
+    }
+
+    function handleSubmitReview() {
+        fetch(`http://127.0.0.1:5055/books/${reviewBook.id}/reviews`, {
+            method: 'POST',
+            headers: {
+                'Content-Type':'application/json'
+            },
+            body: JSON.stringify(reviewPayload)
+        })
+        .then(resp => resp.json())
+        .then(data => console.log(data))
+    }
+
     return(
         <View style={styles.container}>
-            <Text>Write Review (max 250 characters)</Text>
+            <Text style={styles.title}>{reviewBook.title}</Text>
+            <Text>{reviewBook.author}</Text>
+            <Text>{reviewBook.isbn}</Text>
+            <Text></Text>
+            <Text>Write Review ({textField.length}/250)</Text>
             <TextInput 
                 editable 
                 multiline 
@@ -17,7 +44,7 @@ function WriteReview({ navigation }) {
                 maxLength={250}
                 style={styles.reviewfield}
                 value={textField}
-                onChange={(value) => setTextField(value)} 
+                onChangeText={(value) => setTextField(value)} 
             />
             <View style={styles.ratingline}>
                 <Text style={styles.ratingText}>Rating: </Text>
@@ -40,6 +67,10 @@ function WriteReview({ navigation }) {
                     <Picker.Item label='1' value={1} />
                 </Picker>
             </View>
+            <Text></Text>
+            <Button 
+            title='Post Review'
+            onPress={handleSubmitReview} />
         </View>
     )
 }
@@ -62,9 +93,8 @@ const styles = StyleSheet.create({
       paddingRight: 10,
     },
     picker: {
-        alignItems: 'center',
-        borderWidth: 2,
         width: 200,
+        height: 20,
         backgroundColor: '#ccc'
     },
     ratingline: {
@@ -72,6 +102,10 @@ const styles = StyleSheet.create({
     },
     ratingText: {
         fontSize: 20,
+    },
+    title: {
+        fontSize: 20,
+        fontWeight: 'bold'
     }
   });
    

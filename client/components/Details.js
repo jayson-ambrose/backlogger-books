@@ -44,7 +44,10 @@ function Details({route, navigation}) {
         .then(resp => {
             if (resp.ok) {
                 resp.json().then(data => {
-                    setActiveAccount({...activeAccount, backlogs: [...activeAccount.backlogs, data]})
+                    setActiveAccount({
+                        ...activeAccount, backlogs: [
+                            ...activeAccount.backlogs, data]
+                        })
 
                     Alert.alert('Your book has been added!', 'View your backlog now?', [
                         {text: 'Backlog', onPress: () => navigation.navigate('Backlog')},
