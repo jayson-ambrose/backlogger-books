@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import { Button, StyleSheet, Text, View, Image, Alert} from 'react-native';
 import { useRecoilState } from 'recoil'
 import { activeAccountAtom } from './lib/atoms';
@@ -8,26 +8,47 @@ function Details({route, navigation}) {
     const {isbn, title, author} = route.params
 
     const[activeAccount, setActiveAccount] = useRecoilState(activeAccountAtom)
+    const[book, setBook] = useState({})
+
+
+    const payload = {
+        isbn: isbn,
+        title: title,
+        author: author}   
+
+    useEffect(() => {
+        fetch('http://127.0.0.1:5055/books', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(payload)
+        })
+        .then(resp => {
+            if(resp.ok) {
+                resp.json().then(data => setBook(data))
+            }
+            else {
+                console.log(resp.json())
+            }})        
+    },[])
+
+    console.log(book)
 
     function processBacklog() {
-
-        const payload = {
-            isbn: isbn,
-            title: title,
-            author: author,
-            user_id: activeAccount.id}
 
         fetch('http://127.0.0.1:5055/backlogs', {
             method: 'POST',
             headers: {
                 'Content-Type':'application/json'
             },
-            body: JSON.stringify(payload)
+            body: JSON.stringify(book)
         })
         .then(resp => {
             if (resp.ok) {
                 resp.json().then(data => {
-                    setActiveAccount(data)
+                    setActiveAccount({...activeAccount, backlogs: [...activeAccount.backlogs, data]})
+
                     Alert.alert('Your book has been added!', 'View your backlog now?', [
                         {text: 'Backlog', onPress: () => navigation.navigate('Backlog')},
                         {text: 'Stay'}

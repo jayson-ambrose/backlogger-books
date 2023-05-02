@@ -63,8 +63,7 @@ class Users(Resource):
         
         except IntegrityError:
             db.session.rollback()
-            return make_response({'error': 'error 400: Username already taken.'}, 400)
-        
+            return make_response({'error': 'error 400: Username already taken.'}, 400)        
 
 class Books(Resource):
 
@@ -77,19 +76,21 @@ class Books(Resource):
     
     def post(self):
         req = request.get_json()
-
-        user = User.query.filter(User.id == req['user_id']).one_or_none()
         book = Book.query.filter(Book.isbn == req['isbn']).one_or_none()
         
         if not book:
-            book = Book(title={req['title']}, author={req['author']}, isbn={req['isbn']})
+            new_book = Book(title=req['title'], author=req['author'], isbn=req['isbn'])
             try:
-                db.session.add(book)
-                db.session.commit()
-                
-                return make_response(book.to_dict(only=('title', 'id', 'isbn', 'author')), 201)
+                db.session.add(new_book)
+                db.session.commit()                              
+                return make_response(new_book.to_dict(only=('title', 'id', 'isbn', 'author')), 201)
+            
             except:
-                return make_response({'error': 'error 400: Book does not exist and invalid data provided.'})
+                return make_response({'error': '400: Invalid information, unable to add book.'}, 400)
+
+        else:
+            print('Book found in database. Returned book values')
+            return make_response(book.to_dict(only=('title', 'id', 'isbn', 'author')), 200)
 
 class BooksById(Resource):
     def get(self, id):
@@ -111,36 +112,40 @@ class ReviewsByBookId(Resource):
             reviews_list.append(review.to_dict(only=('review_text', 'rating', 'id', 
                                                      'user', '-user.reviews', '-user.backlogs')))
         if len(reviews_list) <= 0:
-            return make_response({"error":"error 404: No reviews found for book"})
+            return make_response({"error":"error 404: No reviews found for this book"})
         return make_response(reviews_list, 200)
 
 class Backlogs(Resource):
+
+    def get(self):
+
+        backlogList = []
+        for backlog in Backlog.query.all():
+            backlogList.append(backlog.to_dict())
+
+        return make_response(backlogList, 200)
+        
     
     def post(self):
+
         req_data = request.get_json()
-        book = Book.query.filter(Book.isbn == req_data['isbn']).one_or_none()
+        print(req_data)
 
-        if not book:
-            
-            book = Book(title = req_data['title'], author = req_data['author'], isbn = req_data['isbn'])
-            try:
-                print(book, book.title, book.author, book.isbn)
-                db.session.add(book)
-                db.session.commit()
-            except:
-                return make_response({"error": "something went wrong on our end while building book"}, 500)
-            
-        backlog = Backlog(completed=0, user_id=req_data['user_id'], book_id=book.id)
-        user = User.query.filter(User.id == req_data['user_id']).one_or_none()
+        print(session.get('user_id'))
 
-        if book in user.books_backlogged:
+        backlog_user = User.query.filter(User.id == session.get('user_id')).one_or_none()
+        book = Book.query.filter(Book.id == req_data['id']).one_or_none() 
+
+        backlog = Backlog(completed=0, user=backlog_user, book=book)
+
+        if backlog.book in backlog_user.books_backlogged:
             return make_response({"error": "book already backlogged"}, 400)
 
         try:            
             db.session.add(backlog)
             db.session.commit()            
 
-            return make_response(user.to_dict(), 201)
+            return make_response(backlog.to_dict(), 201)
 
         except:
             return make_response({"error": "something went wrong"}, 400)

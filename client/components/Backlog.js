@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Button, StyleSheet, Text, View, TextInput } from 'react-native';
 import { activeAccountAtom  } from './lib/atoms';
 import {useRecoilValue} from 'recoil'
@@ -8,12 +8,18 @@ import BacklogDisplay from './BacklogDisplay';
 function Backlog({navigation}) {
 
     const activeAccount = useRecoilValue(activeAccountAtom)
+    const [backlogList, setBacklogList] = useState(activeAccount.backlogs)
 
-    const backlogList = activeAccount.backlogs
-    console.log(backlogList)
+    useEffect(() => {
+        setBacklogList(activeAccount.backlogs)
+    }, [])
         
     const [filter, setFilter] = useState('')
     const [backlogFilter, setBacklogFilter] = useState('no-filter')
+
+    const backlogDisplay = (
+        <BacklogDisplay backlogList={backlogList} navigation={navigation}/>
+    )
     
     return(
         <View style={styles.container}>
@@ -38,7 +44,8 @@ function Backlog({navigation}) {
                     onChangeText={(value) => setFilter(value)}
                     value={filter}
                 />
-                <BacklogDisplay backlogList={backlogList} navigation={navigation}/>
+                {backlogList.length > 0 ? backlogDisplay : null}
+                
             </View>
         </View>
     )

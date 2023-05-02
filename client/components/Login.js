@@ -32,12 +32,12 @@ function Login({navigation}) {
 
             setActiveAccount(data)
             setLoggedIn(true)
-            console.log(data)
+
           }) 
         }
         else{
           Alert.alert("Login Failed", "Username or password did not match our records.")
-        }
+        }  
 
         setUserText('')
         setPassText('')

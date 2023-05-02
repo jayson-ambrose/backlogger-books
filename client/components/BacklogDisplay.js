@@ -7,7 +7,7 @@ function BacklogDisplay({ backlogList, navigation }) {
 
     const displayBacklogs = backlogList.map((backlog) => {
 
-        const {title, author, isbn, id} = backlog.book
+        const {title, author, isbn, id, completed} = backlog.book
 
         return (
             <View key={isbn}>

@@ -58,13 +58,13 @@ class Book(db.Model, SerializerMixin):
     backlogs = db.relationship('Backlog', backref='book')
 
     reviewed_by = association_proxy('reviews', 'user')
-    backloged_by = association_proxy('backlogs', 'user')
+    backlogged_by = association_proxy('backlogs', 'user')
 
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
 
-    def getReviewed(self, reviewer, num, text):
-        review = Review(book=self, rating=num, review_text=text, user=reviewer)
+    # def getReviewed(self, reviewer, num, text):
+    #     review = Review(book=self, rating=num, review_text=text, user=reviewer)
 
 class Review(db.Model, SerializerMixin):
     __tablename__ = 'reviews'
@@ -81,6 +81,8 @@ class Review(db.Model, SerializerMixin):
 
 class Backlog(db.Model, SerializerMixin):
     __tablename__ = 'backlogs'
+
+    serialize_rules = ('-book.user', '-book.reviews', '-book.backlogs', '-user', '-user.backlogs', '-created_at', '-updated_at')
     
     id = db.Column(db.Integer, primary_key=True)
     completed = db.Column(db.Boolean)
