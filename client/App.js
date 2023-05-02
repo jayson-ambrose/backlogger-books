@@ -13,6 +13,7 @@ import Backlog from './components/Backlog'
 import Reviews from './components/Reviews'
 import WriteReview from './components/WriteReview'
 import ChangePassword from './components/ChangePassword'
+import ConfirmDelete from './components/ConfirmDelete';
 
 const Stack = createNativeStackNavigator()
 
@@ -70,6 +71,11 @@ export default function App() {
               name = 'ChangePassword'
               component ={ChangePassword}
               options={{title: 'Change Password'}}
+            />            
+            <Stack.Screen 
+              name = 'ConfirmDelete'
+              component ={ConfirmDelete}
+              options={{title: 'Confirm Delete'}}
             />            
           </Stack.Navigator>      
       </NavigationContainer>

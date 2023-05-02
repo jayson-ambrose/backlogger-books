@@ -22,11 +22,13 @@ function AccountDetails({navigation}) {
             <Text>{activeAccount.favorite_book ? activeAccount.favorite_book : "No book selected"}</Text>
             <Text>{activeAccount.favorite_author ? activeAccount.favorite_author : "No author selected"}</Text>
             <Button 
-            title='Change Password'
-            onPress={() => navigation.navigate('ChangePassword')}/>
-            <Button color='#d64d3e' title='Delete Account'/>
+                title='Change Password'
+                onPress={() => navigation.navigate('ChangePassword')}/>
+            <Button 
+                color='#d64d3e' 
+                title='Delete Account'
+                onPress={() => navigation.navigate('ConfirmDelete')}/>
             <Text>Books Reviewed({numBooksReviewed}):</Text>
-
             {booksReviewed}
         </View>)}
 

@@ -63,11 +63,23 @@ class Users(Resource):
             return make_response({'error': 'error 400: Username already taken.'}, 400) 
 
 class UsersById(Resource):
+    
     def get(self, id):
         user = User.query.filter(User.id == id).one_or_none()
         if user:
             return make_response(user.to_dict())
-        return make_response({"error": "error 404: user not found"}, 404)               
+        return make_response({"error": "error 404: user not found"}, 404) 
+
+    def delete(self, id):
+        user = User.query.filter(User.id == id).one_or_none()
+
+        try:
+            db.session.delete(user)
+            return({"message":"account deleted"}, 204)
+        
+        except:
+            return({"error":"error 404: user not found, unable to delete"}, 404)
+          
 
 class Books(Resource):
 
