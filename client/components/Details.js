@@ -1,15 +1,14 @@
 import React, {useEffect, useState} from 'react'
 import { Button, StyleSheet, Text, View, Image, Alert} from 'react-native';
 import { useRecoilState } from 'recoil'
-import { activeAccountAtom } from './lib/atoms';
+import { activeAccountAtom, bookAtom } from './lib/atoms';
 
 function Details({route, navigation}) {
 
     const {isbn, title, author} = route.params
 
     const[activeAccount, setActiveAccount] = useRecoilState(activeAccountAtom)
-    const[book, setBook] = useState({})
-
+    const[book, setBook] = useRecoilState(bookAtom)
 
     const payload = {
         isbn: isbn,
@@ -32,8 +31,6 @@ function Details({route, navigation}) {
                 console.log(resp.json())
             }})        
     },[])
-
-    console.log(book)
 
     function processBacklog() {
 
@@ -85,10 +82,8 @@ function Details({route, navigation}) {
         <Text style={styles.title}>{title}</Text>
         <Text>{author}</Text>
         <Text>{isbn}</Text>
-        {backlogButton}
-         
-        <Button title="Reviews" onPress={() => navigation.navigate('Reviews', {isbn: isbn, title: title, author: author})}/>
-        
+        {backlogButton}        
+        <Button title="Reviews" onPress={() => navigation.navigate('Reviews', {isbn: isbn, title: title, author: author})}/>        
       </View>
     )
 }

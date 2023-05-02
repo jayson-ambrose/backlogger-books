@@ -10,28 +10,28 @@ function BacklogDisplay({ backlogList, navigation }) {
         const {title, author, isbn, id, completed} = backlog.book
 
         return (
-            <View key={isbn}>
-                <Text style={styles.title}>{title}</Text>
-                <Text>{author}</Text>
-                <Text>{isbn} </Text>
-                <Text> </Text>
-                <Image 
-                    source={{uri: `https://covers.openlibrary.org/b/isbn/${isbn}-L.jpg`}}
-                    style={styles.cover}
-                />
-                <Button 
-                    title={'See Details'}
-                    onPress={() => navigation.navigate('Details', {isbn: isbn, title: title, author: author, id: id})}
-                />
-                <Text/>
-            </View>
+          <View key={isbn}>
+            <Text style={styles.title}>{title}</Text>
+            <Text>{author}</Text>
+            <Text>{isbn} </Text>
+            <Text> </Text>
+            <Image 
+                source={{uri: `https://covers.openlibrary.org/b/isbn/${isbn}-L.jpg`}}
+                style={styles.cover}
+            />
+            <Button 
+              title={'See Details'}
+              onPress={() => navigation.navigate('Details', {isbn: isbn, title: title, author: author, id: id})}
+            />
+            <Text/>
+          </View>
         )
     })
 
     return(
-        <ScrollView>
-            {displayBacklogs}
-        </ScrollView>
+      <ScrollView>
+        {displayBacklogs}
+      </ScrollView>
     )
 }
 

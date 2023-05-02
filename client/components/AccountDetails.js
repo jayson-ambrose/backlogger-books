@@ -10,12 +10,11 @@ function AccountDetails({navigation}) {
 
     const booksReviewed = activeAccount.reviews.map((review) => {
         
-        const {title, author, isbn, id} = review.book
+        const {title, id} = review.book
         
         return (
                 <Text key={id}>{title}</Text>
-        )
-    })  
+        )})  
 
     return(
         <View style={styles.container}>
@@ -25,9 +24,7 @@ function AccountDetails({navigation}) {
             <Text>{activeAccount.favorite_author ? activeAccount.favorite_author : "No author selected"}</Text>
             <Text>Books Reviewed({numBooksReviewed}):</Text>
             {booksReviewed}
-        </View>
-    )
-}
+        </View>)}
 
 export default AccountDetails
 

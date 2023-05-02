@@ -9,3 +9,8 @@ export const loggedInAtom = atom ({
     key: 'loggedInKey',
     default: false,
 })
+
+export const bookAtom = atom ({
+    key: 'bookKey',
+    default: {},
+})

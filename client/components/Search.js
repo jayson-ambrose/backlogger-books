@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react'
 import {Picker} from '@react-native-picker/picker'
-import { Button, StyleSheet, Text, View, TextInput, SectionList } from 'react-native'
+import { Button, StyleSheet, Text, View, TextInput} from 'react-native'
 import SearchDisplay from './SearchDisplay'
 import { useRecoilValue } from 'recoil'
 import { activeAccountAtom } from './lib/atoms'

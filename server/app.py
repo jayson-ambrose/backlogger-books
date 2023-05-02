@@ -31,9 +31,7 @@ class Login(Resource):
             print('made it here')
             print(session['user_id'])
 
-            return make_response(user.to_dict(rules=("-reviews.book.users", "reviews.book", "-reviews.book.users",
-                                                     "-reviews.book.reviews", "-reviews.book.backlogs",
-                                                     "-reviews.book.")), 200)
+            return make_response(user.to_dict(), 200)
         
         except:
             return make_response( {'error': '401 user not found or incorrect password'}, 401)
@@ -112,7 +110,7 @@ class ReviewsByBookId(Resource):
             reviews_list.append(review.to_dict(only=('review_text', 'rating', 'id', 
                                                      'user', '-user.reviews', '-user.backlogs')))
         if len(reviews_list) <= 0:
-            return make_response({"error":"error 404: No reviews found for this book"})
+            return make_response({"error":"error 404: No reviews found for this book"}, 404)
         return make_response(reviews_list, 200)
 
 class Backlogs(Resource):
@@ -149,6 +147,17 @@ class Backlogs(Resource):
 
         except:
             return make_response({"error": "something went wrong"}, 400)
+        
+class CheckSession(Resource):    
+
+    def get(self):
+        print (session.get('user_id'))
+        user = User.query.filter(User.id == session.get('user_id')).first()
+        if user:
+            return user.to_dict()
+        else:
+            return {'message': '401: Not Authorized'}, 401
+        
 
 api.add_resource(Login,'/login')
 api.add_resource(Users, '/users')
@@ -156,6 +165,7 @@ api.add_resource(Backlogs, '/backlogs')
 api.add_resource(Logout, '/logout')
 api.add_resource(Books, '/books')
 api.add_resource(ReviewsByBookId, '/books/<int:id>/reviews')
+api.add_resource(CheckSession, '/check_session')
 
 if __name__ == '__main__':
     app.run(port=5055, debug=True)

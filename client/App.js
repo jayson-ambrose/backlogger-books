@@ -11,6 +11,7 @@ import Details from './components/Details'
 import AccountDetails from './components/AccountDetails'
 import Backlog from './components/Backlog'
 import Reviews from './components/Reviews'
+import WriteReview from './components/WriteReview';
 
 const Stack = createNativeStackNavigator()
 
@@ -32,7 +33,7 @@ export default function App() {
             <Stack.Screen 
               name = 'Search'
               component ={Search}
-              options={{title: 'Find Titles'}}
+              options={{title: 'Search Open Library'}}
             />
             <Stack.Screen 
               name = 'Details'
@@ -58,6 +59,11 @@ export default function App() {
               name = 'Reviews'
               component ={Reviews}
               options={{title: 'Reviews'}}
+            />
+            <Stack.Screen 
+              name = 'WriteReview'
+              component ={WriteReview}
+              options={{title: 'Write Review'}}
             />
           </Stack.Navigator>      
       </NavigationContainer>

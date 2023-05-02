@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, Button, Alert } from "react-native";
-import React from 'react'
+import React, {useEffect} from 'react'
 import {useRecoilState, useSetRecoilState, useRecoilValue} from 'recoil'
 import {activeAccountAtom, loggedInAtom} from './lib/atoms'
 
@@ -8,7 +8,26 @@ import Logout from './Logout'
 
 export default function LandingScreen({navigation}) {  
     
-    const loggedIn = useRecoilValue(loggedInAtom)
+    const [loggedIn, setLoggedIn] = useRecoilState(loggedInAtom)
+    const setActiveAccount = useSetRecoilState(activeAccountAtom)
+
+    useEffect(() => {
+      fetch('http://127.0.0.1:5055/check_session')
+      .then(resp => {
+        if (resp.ok){
+          resp.json().then(data => {
+            setActiveAccount(data)
+            setLoggedIn(true)
+          })
+        }
+        else {
+          setActiveAccount(null)
+          
+
+        }
+      })
+      
+    }, [])
 
     let accountDetailsButton = (
 
