@@ -25,10 +25,9 @@ class Login(Resource):
         try:
             if user.auth(req_data['password']) == False:
                 print ('wrong password')
-                return make_response({"error":"wrong password"}, 401) 
+                return make_response({"error":"wrong password enterred"}, 401) 
                       
             session['user_id'] = user.id
-            print(session['user_id'])
 
             return make_response(user.to_dict(), 200)
         
@@ -76,11 +75,67 @@ class UsersById(Resource):
         try:
             db.session.delete(user)
             db.session.commit()
+            session['user_id'] = None
             return({"message":"account deleted"}, 204)
         
         except:
-            return({"error":"error 404: user not found, unable to delete"}, 404)
-          
+            return make_response({}, 404)
+        
+    def patch (self, id):
+        user = User.query.filter(User.id == id).one_or_none()
+        if not user:
+            return make_response({"error":"error 404: user not found, unable to change password."}, 404)
+        
+        req = request.get_json()
+
+        if req['type'] == 'change_pw':
+
+            if user.auth(req['old_password']) == False:
+                    print ('wrong password')
+                    return make_response({"error":"old password incorrect."}, 401)
+            else:
+                print('old password is correct <--------')         
+            
+            if req['password'] == req['old_password']:
+                return make_response({"error":"error 401: new password and old password must not match."})
+            else:
+                print('old and new passwords do not match <--------')        
+
+            if req['password'] != req['re_password']:
+                return make_response({'error':'401: passwords do not match.'}, 401)
+            else:
+                print('new password and re-new password match <--------')
+                    
+            try:
+                user.password = req['password']
+                db.session.add(user)
+                db.session.commit()
+                return make_response({'message': 'password successfully changed.'}, 200)
+
+            except:
+                return make_response({"error":"something went horribly wrong."}, 402) 
+            
+        if req['type'] == 'change_fav_author':
+
+            try:
+                user.favorite_author = req['author']
+                db.session.add(user)
+                db.session.commit()
+                return make_response(user.to_dict(), 200)
+            
+            except:
+                return make_response({'error': '401: failed to change favorite author'})
+            
+        if req['type'] == 'change_fav_title':
+
+            try:
+                user.favorite_title = req['title']
+                db.session.add(user)
+                db.session.commit()
+                return make_response(user.to_dict(), 200)
+            
+            except:
+                return make_response({'error': '401: failed to change favorite author'})
 
 class Books(Resource):
 

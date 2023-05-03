@@ -35,7 +35,7 @@ function CreateAccount({ navigation }) {
               })
           }
           else {
-            Alert.alert("Account Creation Failed", "Username already taken or invalid")
+            Alert.alert("Account Creation Failed", "Username may have already been taken or passwords didn't match")
           }
       })
   }

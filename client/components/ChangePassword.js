@@ -1,26 +1,27 @@
 import React, {useState} from 'react'
 import { Button, StyleSheet, Text, View, TextInput, Alert} from 'react-native';
-import { useSetRecoilState } from 'recoil';
+import { useSetRecoilState, useRecoilState } from 'recoil';
 import { activeAccountAtom,loggedInAtom } from './lib/atoms';
 
 function ChangePassword({ navigation }) {
 
-  const setActiveAccount = useSetRecoilState(activeAccountAtom)
+  const [activeAccount, setActiveAccount] = useRecoilState(activeAccountAtom)
   const setLoggedIn = useSetRecoilState(loggedInAtom)
 
   const [oldPassText, setOldPassText] = useState('')
   const [passText, setPassText] = useState('')
   const [rePassText, setRePassText] = useState('')
 
-  function handleSubmit(user, pass, rePass) {
+  function handleSubmit(oldPass, pass, rePass) {
     
       const credentials = {
-         username: user,
+          type: 'change_pw',
+          old_password: oldPass,
           password: pass,
           re_password: rePass
       }
-      fetch('http://127.0.0.1:5055/users', {
-          method: 'POST',
+      fetch(`http://127.0.0.1:5055/users/${activeAccount.id}`, {
+          method: 'PATCH',
           headers: {
               'Content-Type':'application/json'
           },
@@ -29,13 +30,12 @@ function ChangePassword({ navigation }) {
       .then(resp => {
           if(resp.ok){
               resp.json().then(data => {
-                setActiveAccount(data)
-                setLoggedIn(true)
+                Alert.alert("Password Changed")
                 navigation.navigate('LandingScreen')                
               })
           }
           else {
-            Alert.alert("Account Creation Failed", "Username already taken or invalid")
+            Alert.alert("Change Password Failed", "Password invalid or was the same as your previous password")
           }
       })
   }
@@ -48,26 +48,26 @@ function ChangePassword({ navigation }) {
                     secureTextEntry={true} 
                     style={styles.textfield}
                     placeholder={'Enter current password...'}
-                    value={passText}
+                    value={oldPassText}
                     onChangeText={(value) => setOldPassText(value)}
                 />
                 <TextInput 
                     secureTextEntry={true} 
                     style={styles.textfield} 
-                    placeholder={'Enter password...'}
+                    placeholder={'Enter new password...'}
                     value={passText}
                     onChangeText={(value) => setPassText(value)}
                 />
                 <TextInput 
                     secureTextEntry={true} 
                     style={styles.textfield} 
-                    placeholder={'Re-enter password...'}
+                    placeholder={'Re-enter new password...'}
                     value={rePassText}
                     onChangeText={(value) => setRePassText(value)}
                 />
                 <Button 
                     title={'Change Password'} 
-                    onPress={() => handleSubmit(userText, passText, rePassText)}
+                    onPress={() => handleSubmit(oldPassText, passText, rePassText)}
                 />
             </View>
           </View>

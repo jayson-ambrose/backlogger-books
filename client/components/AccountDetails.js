@@ -6,6 +6,8 @@ import { Button, StyleSheet, Text, View } from 'react-native';
 function AccountDetails({navigation}) {
 
     const activeAccount = useRecoilValue(activeAccountAtom)
+
+
     const numBooksReviewed = activeAccount.reviews.length
 
     const booksReviewed = activeAccount.reviews.map((review) => {
@@ -19,8 +21,16 @@ function AccountDetails({navigation}) {
     return(
         <View style={styles.container}>
             <Text style={styles.title}>{activeAccount.username}</Text>
-            <Text>{activeAccount.favorite_book ? activeAccount.favorite_book : "No book selected"}</Text>
-            <Text>{activeAccount.favorite_author ? activeAccount.favorite_author : "No author selected"}</Text>
+            <Text>
+                {activeAccount.favorite_title ? 
+                    `Favorite Title: ${activeAccount.favorite_title}` :
+                    "No favorite book selected"}
+             </Text>
+            <Text>
+                {activeAccount.favorite_author ? 
+                    `Favorite Author: ${activeAccount.favorite_author}` :
+                    "No favorite author selected"}
+            </Text>
             <Button 
                 title='Change Password'
                 onPress={() => navigation.navigate('ChangePassword')}/>

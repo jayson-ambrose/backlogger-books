@@ -58,23 +58,87 @@ function Details({route, navigation}) {
                Alert.alert('Error', 'This book is already in your backlog. View backlog now?', [
                     {text: 'Backlog', onPress: () => navigation.navigate('Backlog')},
                     {text: 'Stay'}
-               ])
-            }})
+               ])}})}
+
+    function processSetFavAuthor() {
+
+        const author_payload = {
+            type: 'change_fav_author',
+            author: book.author
+        }
+
+        fetch(`http://127.0.0.1:5055/users/${activeAccount.id}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(author_payload)
+        })
+        .then(resp => {
+            if (resp.ok) {
+                resp.json().then(data => {
+                    console.log(data.favorite_author)
+                    setActiveAccount({...activeAccount, favorite_author: data.favorite_author})
+                    Alert.alert('Favorite author set')
+                })
+            }
+        })
+    }
+
+    function processSetFavTitle() {
+
+        const title_payload = {
+            type: 'change_fav_title',
+            title: book.title
+        }
+
+        fetch(`http://127.0.0.1:5055/users/${activeAccount.id}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(title_payload)
+        })
+        .then(resp => {
+            if (resp.ok) {
+                resp.json().then(data => {
+                    console.log(data.favorite_title)
+                    setActiveAccount({...activeAccount, favorite_title: data.favorite_title})
+                    Alert.alert('Favorite title set')
+                })
+            }
+        })
     }
 
     function promptLogin () {
         Alert.alert('Go to log-in screen?', 'Must be logged in to add to your backlog.', [
             {text: 'Login', onPress: () => navigation.navigate('LandingScreen')},
-            {text: 'Cancel'}
-        ])
-    }
+            {text: 'Cancel'}])}
 
     let backlogButton = (
         <Button title="Backlog Book" color={'#adc6ec'} onPress={() => promptLogin()}/>)
+    let favAuthButton = (
+        <Button
+            title='Set Favorite Author'
+            onPress={() => Alert.alert('Log in to set your favorite author.')}/>)
+    let favTitleButton = (
+        <Button
+            title='Set Favorite Title'
+            onPress={() => Alert.alert('Log in to set your favorite title.')}/>)
 
     if (activeAccount != null) {
         backlogButton = (
             <Button title="Backlog Book" onPress={() => processBacklog()}/>)}
+
+        favAuthButton = (
+            <Button
+                title='Set Favorite Author'
+                onPress={() => processSetFavAuthor()}/>)
+
+        favTitleButton = (
+            <Button
+                title='Set Favorite Title'
+                onPress={() => processSetFavTitle()}/>)
 
     return(
       <View style={styles.container}>
@@ -86,7 +150,12 @@ function Details({route, navigation}) {
         <Text>{author}</Text>
         <Text>{isbn}</Text>
         {backlogButton}        
-        <Button title="Reviews" onPress={() => navigation.navigate('Reviews', {isbn: isbn, title: title, author: author})}/>        
+        <Button 
+            title="Reviews" 
+            onPress={() => navigation.navigate('Reviews', {isbn: isbn, title: title, author: author})}
+        />
+        {favAuthButton}   
+        {favTitleButton}    
       </View>
     )
 }

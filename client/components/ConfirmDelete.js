@@ -13,12 +13,13 @@ function ConfirmDelete({navigation}) {
         fetch(`http://127.0.0.1:5055/users/${activeAccount.id}`, {
             method: 'DELETE'
         })
-        .then(resp => console.log(resp))
-        .then(() => {           
-            navigation.navigate('LandingScreen')
-            setLoggedIn(false)
-            setActiveAccount(null)
-        })
+        .then(resp => {
+            if (resp.ok){        
+                navigation.navigate('LandingScreen')
+                setLoggedIn(false)
+                setActiveAccount(null)}  
+            }
+        )
     }
 
     return(

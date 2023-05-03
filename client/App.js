@@ -3,17 +3,17 @@ import {RecoilRoot} from 'recoil'
 import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
+import ChangePassword from './components/ChangePassword'
+import AccountDetails from './components/AccountDetails'
 import LandingScreen from './components/LandingScreen'
 import CreateAccount from './components/CreateAccount'
-import Search from './components/Search'
+import ConfirmDelete from './components/ConfirmDelete'
 import ScanBarcode from './components/ScanBarcode'
+import WriteReview from './components/WriteReview'
 import Details from './components/Details'
-import AccountDetails from './components/AccountDetails'
 import Backlog from './components/Backlog'
 import Reviews from './components/Reviews'
-import WriteReview from './components/WriteReview'
-import ChangePassword from './components/ChangePassword'
-import ConfirmDelete from './components/ConfirmDelete';
+import Search from './components/Search'
 
 const Stack = createNativeStackNavigator()
 
