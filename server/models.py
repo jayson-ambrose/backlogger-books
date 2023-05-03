@@ -20,16 +20,14 @@ class User(db.Model, SerializerMixin):
     favorite_author = db.Column(db.String)
     favorite_title = db.Column(db.String)
 
-    reviews = db.relationship('Review', backref='user')
-    backlogs = db.relationship('Backlog', backref='user')
+    reviews = db.relationship('Review', backref='user' , cascade='all, delete-orphan')
+    backlogs = db.relationship('Backlog', backref='user', cascade='all, delete-orphan')
 
     books_reviewed = association_proxy('reviews', 'book')
     books_backlogged = association_proxy('backlogs', 'book')
 
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
-
-    #auth stuff
 
     @hybrid_property
     def password(self):
@@ -63,9 +61,6 @@ class Book(db.Model, SerializerMixin):
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
 
-    # def getReviewed(self, reviewer, num, text):
-    #     review = Review(book=self, rating=num, review_text=text, user=reviewer)
-
 class Review(db.Model, SerializerMixin):
     __tablename__ = 'reviews'
 
@@ -82,7 +77,8 @@ class Review(db.Model, SerializerMixin):
 class Backlog(db.Model, SerializerMixin):
     __tablename__ = 'backlogs'
 
-    serialize_rules = ('-book.user', '-book.reviews', '-book.backlogs', '-user', '-user.backlogs', '-created_at', '-updated_at')
+    serialize_rules = ('-book.user', '-book.reviews', '-book.backlogs',
+                        '-user', '-user.backlogs', '-created_at', '-updated_at')
     
     id = db.Column(db.Integer, primary_key=True)
     completed = db.Column(db.Boolean)

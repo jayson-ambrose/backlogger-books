@@ -1,7 +1,25 @@
 import React from 'react'
 import { Button, StyleSheet, Text, View, Alert } from 'react-native';
+import { useSetRecoilState, useRecoilState } from 'recoil';
+import { loggedInAtom, activeAccountAtom } from './lib/atoms';
 
 function ConfirmDelete({navigation}) {
+
+    const setLoggedIn = useSetRecoilState(loggedInAtom)
+    const [activeAccount, setActiveAccount] = useRecoilState(activeAccountAtom)
+
+    function handleDelete() {
+
+        fetch(`http://127.0.0.1:5055/users/${activeAccount.id}`, {
+            method: 'DELETE'
+        })
+        .then(resp => console.log(resp))
+        .then(() => {           
+            navigation.navigate('LandingScreen')
+            setLoggedIn(false)
+            setActiveAccount(null)
+        })
+    }
 
     return(
         <View style={styles.container}>
@@ -13,7 +31,8 @@ function ConfirmDelete({navigation}) {
             </Text>
             <Button 
                 title="Delete Account"
-                color='#d64d3e' 
+                color='#d64d3e'
+                onPress={() => handleDelete()} 
             />           
         </View>
     )

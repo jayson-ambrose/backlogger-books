@@ -75,6 +75,7 @@ class UsersById(Resource):
 
         try:
             db.session.delete(user)
+            db.session.commit()
             return({"message":"account deleted"}, 204)
         
         except:
@@ -205,8 +206,9 @@ api.add_resource(Users, '/users')
 api.add_resource(Backlogs, '/backlogs')
 api.add_resource(Logout, '/logout')
 api.add_resource(Books, '/books')
-api.add_resource(ReviewsByBookId, '/books/<int:id>/reviews')
 api.add_resource(CheckSession, '/check_session')
+api.add_resource(ReviewsByBookId, '/books/<int:id>/reviews')
+api.add_resource(UsersById, '/users/<int:id>')
 
 if __name__ == '__main__':
     app.run(port=5055, debug=True)

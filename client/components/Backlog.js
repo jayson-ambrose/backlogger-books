@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Button, StyleSheet, Text, View, TextInput } from 'react-native';
+import { StyleSheet, Text, View, TextInput } from 'react-native';
 import { activeAccountAtom  } from './lib/atoms';
 import {useRecoilValue} from 'recoil'
 import {Picker} from '@react-native-picker/picker'
