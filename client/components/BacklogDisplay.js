@@ -38,6 +38,7 @@ function BacklogDisplay({ backlog, navigation, handleUpdateBacklog }) {
               source={{uri: `https://covers.openlibrary.org/b/isbn/${isbn}-L.jpg`}}
               style={styles.cover}
           />
+          <Text>  Completed?</Text>
           <Switch 
             onValueChange={(value) => {handleChangeToggle(value)}}
             value={switchValue}
