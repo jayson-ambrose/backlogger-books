@@ -1,39 +1,55 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { Button, StyleSheet, Text, View, ScrollView, Image, Switch } from 'react-native';
 
-// import native components here
-import { Button, StyleSheet, Text, View, ScrollView, Image } from 'react-native';
+function BacklogDisplay({ backlog, navigation, handleUpdateBacklog }) {
 
-function BacklogDisplay({ backlogList, navigation }) {
+  const {title, author, isbn, id} = backlog.book    
+  const [switchValue, setSwitchValue] = useState(backlog.completed)
 
-    const displayBacklogs = backlogList.map((backlog) => {
+  function handleChangeToggle(value) {
+    setSwitchValue(value)
+    updateCompleted(value)
+  }
 
-        const {title, author, isbn, id, completed} = backlog.book
+  function updateCompleted(value) {
 
-        return (
-          <View key={isbn}>
-            <Text style={styles.title}>{title}</Text>
-            <Text>{author}</Text>
-            <Text>{isbn} </Text>
-            <Text> </Text>
-            <Image 
-                source={{uri: `https://covers.openlibrary.org/b/isbn/${isbn}-L.jpg`}}
-                style={styles.cover}
-            />
-            <Button 
-              title={'See Details'}
-              onPress={() => navigation.navigate('Details', {isbn: isbn, title: title, author: author, id: id})}
-            />
-            <Text/>
-          </View>
-        )
+    fetch(`http://127.0.0.1:5055/backlogs/${backlog.id}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(value)
     })
+    .then(resp => {
+      if(resp.ok) {
+        resp.json().then(data => handleUpdateBacklog(data.id, data))
+      }
+    })
+   }
 
-    return(
-      <ScrollView>
-        {displayBacklogs}
-      </ScrollView>
-    )
-}
+    return (
+      <View key={isbn}>
+        <Text style={styles.title}>{title}</Text>
+        <Text>{author}</Text>
+        <Text>{isbn} </Text>
+        <Text> </Text>
+        <View style={styles.coverbutton}>
+          <Image 
+              source={{uri: `https://covers.openlibrary.org/b/isbn/${isbn}-L.jpg`}}
+              style={styles.cover}
+          />
+          <Switch 
+            onValueChange={(value) => {handleChangeToggle(value)}}
+            value={switchValue}
+          />
+        </View>
+        <Button 
+          title={'See Details'}
+          onPress={() => navigation.navigate('Details', {isbn: isbn, title: title, author: author, id: id})}
+        />
+        <Text/>
+      </View>
+    )}
 
 export default BacklogDisplay
 
@@ -51,6 +67,10 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 20,
         fontWeight: 'bold'
+    },
+    coverbutton: {
+      flex: 1,
+      flexDirection: 'row'
     }
   });
    

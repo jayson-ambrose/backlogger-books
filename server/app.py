@@ -194,7 +194,10 @@ class ReviewsByBookId(Resource):
         print(req)
 
         rev_user = User.query.filter(User.id == req['user_id']).one_or_none()
-        rev_book = Book.query.filter(Book.id == id).one_or_none() 
+        rev_book = Book.query.filter(Book.id == id).one_or_none()
+
+        if rev_user in rev_book.reviewed_by:
+            return make_response({"error":"401: User already reviewed this book"}, 401) 
 
         try:
             new_review = Review(rating=req['rating'], review_text=req['text'], user=rev_user, book=rev_book)
@@ -240,10 +243,41 @@ class Backlogs(Resource):
             db.session.add(backlog)
             db.session.commit()            
 
-            return make_response(backlog.to_dict(), 201)
+            return make_response(backlog.to_dict(rules={'completed'}), 201)
 
         except:
             return make_response({"error": "something went wrong"}, 400)
+        
+class BacklogsById(Resource):
+
+    def get (self, id):
+        backlog = Backlog.query.filter(Backlog.id == id).one_or_none()
+        if backlog:
+            return make_response(backlog.to_dict(), 200)
+        return make_response({'error': 'error 404: backlog not found'}, 404)
+    
+    def patch(self, id):
+        backlog = Backlog.query.filter(Backlog.id == id).one_or_none()
+        req = request.get_json()
+
+        print(req)
+        if backlog: 
+
+            backlog.completed = 1 if req else 0
+            
+            db.session.add(backlog)
+            db.session.commit()
+            return make_response(backlog.to_dict(), 202)
+        return make_response({'error': 'error 404: backlog not found'}, 404)
+    
+class BacklogsByUserId(Resource):
+    def get(self, id):
+        backlog_list = []
+        for backlog in Backlog.query.filter(Backlog.user_id == id).all():
+            print(backlog)
+            backlog_list.append(backlog.to_dict())
+
+        return make_response (backlog_list, 200)
         
 class CheckSession(Resource):    
 
@@ -258,12 +292,14 @@ class CheckSession(Resource):
 
 api.add_resource(Login,'/login')
 api.add_resource(Users, '/users')
-api.add_resource(Backlogs, '/backlogs')
-api.add_resource(Logout, '/logout')
 api.add_resource(Books, '/books')
-api.add_resource(CheckSession, '/check_session')
-api.add_resource(ReviewsByBookId, '/books/<int:id>/reviews')
+api.add_resource(Logout, '/logout')
+api.add_resource(Backlogs, '/backlogs')
 api.add_resource(UsersById, '/users/<int:id>')
+api.add_resource(BacklogsById, '/backlogs/<int:id>')
+api.add_resource(BacklogsByUserId, '/users/<int:id>/backlogs')
+api.add_resource(ReviewsByBookId, '/books/<int:id>/reviews')
+api.add_resource(CheckSession, '/check_session')
 
 if __name__ == '__main__':
     app.run(port=5055, debug=True)

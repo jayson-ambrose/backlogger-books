@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react'
-import { Button, StyleSheet, Text, View, TextInput } from 'react-native';
+import React, { useState } from 'react'
+import { Button, StyleSheet, Text, View, TextInput, Alert } from 'react-native';
 import { Picker } from '@react-native-picker/picker'
-import { useRecoilValue} from 'recoil'
+import { useRecoilValue, useRecoilState} from 'recoil'
 import { activeAccountAtom, bookAtom } from './lib/atoms';
 
 function WriteReview({ navigation }) {
@@ -26,8 +26,16 @@ function WriteReview({ navigation }) {
             },
             body: JSON.stringify(reviewPayload)
         })
-        .then(resp => resp.json())
-        .then(data => console.log(data))
+        .then(resp => {
+            if (resp.ok){
+                resp.json().then(data => {
+                    Alert.alert('Review posted')
+                    navigation.navigate('Details', {isbn: reviewBook.isbn, title: reviewBook.title, author: reviewBook.author})
+                })}
+            else {
+                Alert.alert('Review failed.', 'You have likely already reviewed this book.')
+            }        
+        })
     }
 
     return(
