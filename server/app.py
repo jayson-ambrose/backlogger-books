@@ -4,7 +4,7 @@ from sqlalchemy.exc import IntegrityError
 from config import app, db, api
 from models import User, Review, Backlog, Book
 
-app.secret_key = 'change this secret key'
+app.secret_key = '1gds2h1Fhf2ZD2g1jh8wA1f5hSS12g5AG'
 
 class Logout(Resource):
     def get(self):
@@ -47,6 +47,9 @@ class Users(Resource):
 
         if req['password'] != req['re_password']:
             return make_response({'error':'401: passwords do not match.'}, 401)
+        
+        if len(req['password']) < 6:
+            return make_response({'error':'401: password must be at least 6 characters long.'}, 401) 
         
         user = User(username=req.get('username'), password=req.get('password'))
         try:
@@ -91,21 +94,17 @@ class UsersById(Resource):
         if req['type'] == 'change_pw':
 
             if user.auth(req['old_password']) == False:
-                    print ('wrong password')
-                    return make_response({"error":"old password incorrect."}, 401)
-            else:
-                print('old password is correct <--------')         
+                    return make_response({"error":"old password incorrect."}, 401)   
             
             if req['password'] == req['old_password']:
-                return make_response({"error":"error 401: new password and old password must not match."})
-            else:
-                print('old and new passwords do not match <--------')        
+                return make_response({"error":"error 401: new password and old password must not match."}, 402)  
 
             if req['password'] != req['re_password']:
-                return make_response({'error':'401: passwords do not match.'}, 401)
-            else:
-                print('new password and re-new password match <--------')
-                    
+                return make_response({'error':'401: passwords do not match.'}, 403)
+            
+            if len(req['password']) < 6:
+                return make_response({'error':'401: password must be at least 6 characters long.'}, 405)
+                                
             try:
                 user.password = req['password']
                 db.session.add(user)
@@ -115,7 +114,7 @@ class UsersById(Resource):
             except:
                 return make_response({"error":"something went horribly wrong."}, 402) 
             
-        if req['type'] == 'change_fav_author':
+        elif req['type'] == 'change_fav_author':
 
             try:
                 user.favorite_author = req['author']
@@ -124,18 +123,19 @@ class UsersById(Resource):
                 return make_response(user.to_dict(), 200)
             
             except:
-                return make_response({'error': '401: failed to change favorite author'})
+                return make_response({'error': '401: failed to change favorite author'}, 401)
             
-        if req['type'] == 'change_fav_title':
+        elif req['type'] == 'change_fav_title':
 
             try:
+                print('made it here <----before user.favorite_title')
                 user.favorite_title = req['title']
                 db.session.add(user)
                 db.session.commit()
                 return make_response(user.to_dict(), 200)
             
             except:
-                return make_response({'error': '401: failed to change favorite author'})
+                return make_response({'error': '401: failed to change favorite title'}, 401)
 
 class Books(Resource):
 

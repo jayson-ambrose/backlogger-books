@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     padding: 24,
-    backgroundColor: '#2c666f',
+    backgroundColor: '#fff',
   },
   main: {
     flex: 1,
@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 38,
     fontWeight: "bold",
-    color: '#fff'
+    color: '#000'
   },
   subtitle: {
     fontSize: 36,

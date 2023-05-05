@@ -29,6 +29,33 @@ class User(db.Model, SerializerMixin):
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
 
+    @validates('password')
+    def validate_password (self, key, password):
+        print (len(password))
+        print('-----------------')
+        if (4 > len(password) > 35):
+            print('made it here <----validation')
+            raise ValueError('password must be between 5 and 34 characters')
+        return password 
+
+    @validates('favoirte_author')
+    def validate_fav_author (self, key, author):
+        if type(author) != str:
+            raise ValueError('favorite author must be a string')
+        return author  
+
+    @validates('favorite_title')
+    def validate_fav_title (self, key, title):
+        if type(title) != str:
+            raise ValueError('favorite title must be a string') 
+        return title         
+    
+    @validates('username')
+    def validate_username (self, key, username):
+        if 4 > len(username) > 16:
+            raise ValueError('username must be between 5 and 15 characters')
+        return username 
+
     @hybrid_property
     def password(self):
         return self._password
@@ -40,7 +67,8 @@ class User(db.Model, SerializerMixin):
 
     def auth(self, password):
         print(bcrypt.check_password_hash(self.password, password))
-        return bcrypt.check_password_hash(self.password, password)
+        return bcrypt.check_password_hash(self.password, password)     
+    
 
 class Book(db.Model, SerializerMixin):
     __tablename__ = 'books'
@@ -50,7 +78,7 @@ class Book(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String)
     author = db.Column(db.String)
-    isbn = db.Column(db.String)
+    isbn = db.Column(db.String, nullable=False)
 
     reviews = db.relationship('Review', backref='book')
     backlogs = db.relationship('Backlog', backref='book')
@@ -72,7 +100,13 @@ class Review(db.Model, SerializerMixin):
     book_id = db.Column(db.Integer, db.ForeignKey('books.id'))
 
     created_at = db.Column(db.DateTime, server_default=db.func.now())    
-    updated_at = db.Column(db.DateTime, onupdate=db.func.now())    
+    updated_at = db.Column(db.DateTime, onupdate=db.func.now()) 
+
+    @validates('review_text')
+    def validate_review_text (self, key, review):
+        if len(review) > 260:
+            raise ValueError('review text must be below 260 characters')
+        return review   
 
 class Backlog(db.Model, SerializerMixin):
     __tablename__ = 'backlogs'

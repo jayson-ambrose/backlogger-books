@@ -8,7 +8,7 @@ import {activeAccountAtom, loggedInAtom} from './lib/atoms'
 function Logout({navigation}) {
 
   const setLoggedIn = useSetRecoilState(loggedInAtom)
-  const setActiveAccount = useSetRecoilState(activeAccountAtom)
+  const [activeAccount, setActiveAccount] = useRecoilState(activeAccountAtom)
 
   function handleLogout () {
     fetch('http://127.0.0.1:5055/logout', {
@@ -21,7 +21,7 @@ function Logout({navigation}) {
     
   return(
     <View style={styles.container}>
-        <Text>Welcome.</Text>
+        <Text>{activeAccount ? `Welcome ${activeAccount.username}`: null}</Text>
         <Button color='#d64d3e' title='Logout' onPress={handleLogout}/>
     </View>
   )

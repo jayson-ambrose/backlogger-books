@@ -102,6 +102,7 @@ function Details({route, navigation}) {
         .then(resp => {
             if (resp.ok) {
                 resp.json().then(data => {
+                    console.log(data)
                     console.log(data.favorite_title)
                     setActiveAccount({...activeAccount, favorite_title: data.favorite_title})
                     Alert.alert('Favorite title set')
