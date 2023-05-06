@@ -9,7 +9,7 @@ function SearchDisplay({ bookList, navigation }) {
         const {title, author, isbn} = book
         return (
             <View key={isbn}>
-                <Text style={styles.title}>{title}</Text>
+                <Text>{title}</Text>
                 <Text>{author}</Text>
                 <Text>{isbn} </Text>
                 <Text> </Text>
@@ -36,19 +36,9 @@ function SearchDisplay({ bookList, navigation }) {
 export default SearchDisplay
 
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: '#fff',
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
     cover: {
         height: 85,
         width: 55
-    },
-    title: {
-        fontSize: 20,
-        fontWeight: 'bold'
     }
   });
    

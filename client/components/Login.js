@@ -1,7 +1,9 @@
 import React, {useState} from 'react'
-import { Button, Text,  StyleSheet, View, TextInput, Pressable, Alert} from 'react-native';
-import {useRecoilState, useSetRecoilState, useRecoilValue} from 'recoil'
-import {activeAccountAtom, loggedInAtom} from './lib/atoms'
+import { StyleSheet, View, TextInput, Alert} from 'react-native';
+import { useSetRecoilState } from 'recoil'
+import { activeAccountAtom, loggedInAtom } from './lib/atoms'
+import CustomButton from './CustomButton';
+import CustomTextInput from './CustomTextInput';
 
 
 function Login({navigation}) {
@@ -11,6 +13,13 @@ function Login({navigation}) {
 
   const setActiveAccount = useSetRecoilState(activeAccountAtom)
   const setLoggedIn = useSetRecoilState(loggedInAtom)
+
+  function handleChangeUserText(value) {
+    setUserText(value)
+  }
+  function handleChangePassText(value) {
+    setPassText(value)
+  }
   
   function handleLogin(user, pass) {
       
@@ -49,27 +58,46 @@ function Login({navigation}) {
     }
 
     return(
-      <View style={styles.container}>
-          <TextInput 
-            style={styles.textfield}
+      <View>
+          <CustomTextInput 
             placeholder={'Enter Username...'}
-            value={userText}
-            onChangeText={(value) => setUserText(value)}
+            handleChangeText={handleChangeUserText}
+            controlledText={userText}
+            highlightColor = "#60292e"
           />
-          <TextInput 
+
+          <CustomTextInput 
+            placeholder={'Enter Password...'}
+            handleChangeText={handleChangePassText}
+            controlledText={passText}
+            secure={true}
+            highlightColor = "#60292e"
+          />
+
+          {/* <TextInput 
+            style={styles.textInput} 
             secureTextEntry={true} 
-            style={styles.textfield} 
             placeholder={'Enter Password...'}
             value={passText}
             onChangeText={(value) => setPassText(value)}
-          />
-          <Button 
-            title={'Login'} 
-            onPress={() => handleLogin(userText, passText)}
-          />
-          <Pressable onPress={() => navigation.navigate('CreateAccount')}>
-            <Text>Create Account</Text>
-          </Pressable>
+          /> */}
+
+          
+
+          <View style={styles.buttonContainer}>
+            <CustomButton
+              width={'45%'}
+              color={'#377ba4'} 
+              title={'Login'} 
+              onPress={() => handleLogin(userText, passText)}
+            />
+            <CustomButton
+              width={'45%'}
+              color={'#377ba4'} 
+              title={'Sign Up'} 
+              onPress={() => navigation.navigate('CreateAccount')}
+            />
+          </View>
 
       </View>
     )
@@ -78,18 +106,19 @@ function Login({navigation}) {
 export default Login
 
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: '#73b4ca',
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-    textfield: {
-      backgroundColor: '#fff',
-      width: 300,
-      borderWidth: 2,
-      paddingLeft: 10,
-      marginBottom: 5
-    }
-  });
+  buttonContainer: {
+    flexDirection:'row',
+    justifyContent:'center',
+    margin: 10
+  },
+  textInput: {
+    height: 40,
+    margin: 5,
+    paddingLeft:15,
+    borderWidth: 1,
+    borderRadius: 8,
+    borderColor: 'grey',
+    backgroundColor: 'white'
+  }
+});
    

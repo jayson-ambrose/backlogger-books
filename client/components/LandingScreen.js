@@ -1,8 +1,9 @@
-import { StyleSheet, Text, View, Button, Alert } from "react-native";
+import { StyleSheet, View, Alert, Image } from "react-native";
 import React, {useEffect} from 'react'
 import {useRecoilState, useSetRecoilState, useRecoilValue} from 'recoil'
 import {activeAccountAtom, loggedInAtom} from './lib/atoms'
 
+import CustomButton from "./CustomButton";
 import Login from './Login'
 import Logout from './Logout'
 
@@ -22,8 +23,6 @@ export default function LandingScreen({navigation}) {
         }
         else {
           setActiveAccount(null)
-          
-
         }
       })
       
@@ -31,71 +30,51 @@ export default function LandingScreen({navigation}) {
 
     let accountDetailsButton = (
 
-      <Button
+      <CustomButton
         title={'Account Details'}
-        color='#adc6ec'
-        onPress={() => Alert.alert("Log in to view account details")}/>)
+        color={loggedIn ? '#377ba4' :'#bbb6c7'}
+        onPress={loggedIn ? () => navigation.navigate('AccountDetails') :
+          () => Alert.alert("Log in to view account details")}/>)
 
     let backlogButton = (
-      <Button 
+      <CustomButton 
         title={'Backlog'}
-        color='#adc6ec'
-        onPress={() => Alert.alert("Log in to view your backlog")}/>)    
-
-    if (loggedIn){
-      accountDetailsButton = (
-        <Button 
-          title={'Account Details'} 
-          onPress={() => navigation.navigate('AccountDetails')}/>)
-
-      backlogButton = (
-        <Button title={'Backlog'}
-        onPress={() => navigation.navigate('Backlog')}/>)
-    }
+        color={loggedIn ? '#377ba4' :'#bbb6c7'}
+        onPress={loggedIn ? () => navigation.navigate('Backlog') :
+           () => Alert.alert("Log in to view your backlog")}/>)
 
   return (
-    <View style={styles.container}>
-      <View style={styles.main}>
-        <Text style={styles.title}>Backlogger Books</Text>
-        {loggedIn ? <Logout />: <Login navigation={navigation}/> }
-        {accountDetailsButton}
-        {backlogButton}
-        <Button 
-          title={'Search'} 
-          onPress={() => navigation.navigate('Search')}        
-        />
-        <Button 
-          title={'Scan Barcode'} 
-          onPress={() => navigation.navigate('ScanBarcode')}
-        />
-      </View>              
+    <View style={styles.mainContainer}>
+      <Image
+        source={require('../assets/banner.png')} 
+        style={styles.banner}/>      
+      {loggedIn ? <Logout />: <Login navigation={navigation}/>}       
+        <View>
+          {accountDetailsButton}
+          {backlogButton}
+          <CustomButton 
+            color={'#377ba4'}
+            title={'Search'} 
+            onPress={() => navigation.navigate('Search')}        
+          />
+          <CustomButton 
+            color={'#377ba4'}
+            title={'Scan Barcode'} 
+            onPress={() => navigation.navigate('ScanBarcode')}        
+          />
+        </View>          
     </View>     
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  mainContainer: {
     flex: 1,
-    alignItems: "center",
-    padding: 24,
-    backgroundColor: '#fff',
+    alignItems: 'center',
+    backgroundColor: '#f8f6ea',
   },
-  main: {
-    flex: 1,
-    justifyContent: "center",
-    maxWidth: 960,
-    marginHorizontal: "auto",
-  },
-  title: {
-    fontSize: 38,
-    fontWeight: "bold",
-    color: '#000'
-  },
-  subtitle: {
-    fontSize: 36,
-    color: "#38434D",
-  },
-  logout: {
-    backgroundColor: "#e24332"
+  banner: {
+    width: '100%',
+    resizeMode: 'contain',
   }
 });

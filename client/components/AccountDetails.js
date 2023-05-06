@@ -19,8 +19,8 @@ function AccountDetails({navigation}) {
         )})  
 
     return(
-        <View style={styles.container}>
-            <Text style={styles.title}>{activeAccount.username}</Text>
+        <View>
+            <Text>{activeAccount.username}</Text>
             <Text>
                 {activeAccount.favorite_title ? 
                     `Favorite Title: ${activeAccount.favorite_title}` :
@@ -45,15 +45,5 @@ function AccountDetails({navigation}) {
 export default AccountDetails
 
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: '#fff',
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-    title: {
-        fontSize: 20,
-        fontWeight: 'bold'
-    }
   });
    
