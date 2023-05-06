@@ -1,7 +1,11 @@
 import React, { useState } from 'react'
 import {StyleSheet, Text, Pressable } from 'react-native';
 
-function CustomButton({onPress, color='black', title='Button', width=null }) {
+function CustomButton({
+    onPress, 
+    color='black', 
+    title='Button', 
+    width=null }) {
 
     const [buttonColor, setButtonColor] = useState(color)
 

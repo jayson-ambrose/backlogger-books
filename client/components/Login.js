@@ -73,17 +73,6 @@ function Login({navigation}) {
             secure={true}
             highlightColor = "#60292e"
           />
-
-          {/* <TextInput 
-            style={styles.textInput} 
-            secureTextEntry={true} 
-            placeholder={'Enter Password...'}
-            value={passText}
-            onChangeText={(value) => setPassText(value)}
-          /> */}
-
-          
-
           <View style={styles.buttonContainer}>
             <CustomButton
               width={'45%'}
@@ -110,15 +99,6 @@ const styles = StyleSheet.create({
     flexDirection:'row',
     justifyContent:'center',
     margin: 10
-  },
-  textInput: {
-    height: 40,
-    margin: 5,
-    paddingLeft:15,
-    borderWidth: 1,
-    borderRadius: 8,
-    borderColor: 'grey',
-    backgroundColor: 'white'
   }
 });
    

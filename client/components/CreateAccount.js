@@ -1,7 +1,9 @@
 import React, {useState} from 'react'
-import { Button, StyleSheet, Text, View, TextInput, Alert} from 'react-native';
+import { Button, StyleSheet, Text, View, Image, Alert} from 'react-native';
 import { useSetRecoilState } from 'recoil';
 import { activeAccountAtom,loggedInAtom } from './lib/atoms';
+import CustomButton from './CustomButton';
+import CustomTextInput from './CustomTextInput';
 
 function CreateAccount({ navigation }) {
 
@@ -41,31 +43,34 @@ function CreateAccount({ navigation }) {
   }
 
     return(
-        <View>
-          <View>
-            <View>
-              <TextInput 
-                placeholder={'Enter Username...'}
-                value={userText}
-                onChangeText={(value) => setUserText(value)}
-              />
-              <TextInput 
-                secureTextEntry={true} 
-                placeholder={'Enter Password...'}
-                value={passText}
-                onChangeText={(value) => setPassText(value)}
-              />
-              <TextInput 
-                secureTextEntry={true} 
-                placeholder={'Re-enter Password...'}
-                value={rePassText}
-                onChangeText={(value) => setRePassText(value)}
-              />
-              <Button 
-                title={'Create Account'} 
-                onPress={() => handleSubmit(userText, passText, rePassText)}
-              />
-            </View>
+        <View style={styles.mainContainer}>
+          <Image
+        source={require('../assets/banner.png')} 
+        style={styles.banner}/>  
+          <View style={{width: "90%"}}>
+            <CustomTextInput 
+              placeholder={'Enter Username...'}
+              value={userText}
+              onChangeText={(value) => setUserText(value)}
+            />
+          <CustomTextInput 
+              secureTextEntry={true} 
+              placeholder={'Enter Password...'}
+              value={passText}
+              onChangeText={(value) => setPassText(value)}
+            />
+            <CustomTextInput 
+              secureTextEntry={true} 
+              placeholder={'Re-enter Password...'}
+              value={rePassText}
+              onChangeText={(value) => setRePassText(value)}
+            />
+            <CustomButton
+              style={{margin: 10}} 
+              title={'Create Account'} 
+              onPress={() => handleSubmit(userText, passText, rePassText)}
+              color='#377ba4'
+            />
           </View>
         </View>
     )
@@ -74,6 +79,18 @@ function CreateAccount({ navigation }) {
 export default CreateAccount
 
 const styles = StyleSheet.create({
+  mainContainer: {
+    flex: 1,
+    alignItems: 'center',
+    backgroundColor: '#f8f6ea',
+  },
+  titleLine: {
+    fontSize: 20
+  },
+  banner: {
+    width: '100%',
+    resizeMode: 'contain',
+  }
      
   });
    
