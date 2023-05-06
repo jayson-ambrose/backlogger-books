@@ -23,8 +23,8 @@ function ConfirmDelete({navigation}) {
     }
 
     return(
-        <View style={styles.container}>
-            <Text style={styles.text}>
+        <View>
+            <Text>
                 Are you sure you want to delete your account? 
                 This action cannot be undone. All of your 
                 reviews and backlogged books will also be
@@ -42,15 +42,5 @@ function ConfirmDelete({navigation}) {
 export default ConfirmDelete
 
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: '#fff',
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-    text: {
-        paddingRight: 20,
-        paddingLeft: 20
-    }
   });
    

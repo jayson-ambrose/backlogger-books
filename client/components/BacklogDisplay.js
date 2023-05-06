@@ -29,11 +29,10 @@ function BacklogDisplay({ backlog, navigation, handleUpdateBacklog }) {
 
     return (
       <View key={isbn}>
-        <Text style={styles.title}>{title}</Text>
+        <Text>{title}</Text>
         <Text>{author}</Text>
         <Text>{isbn} </Text>
-        <Text> </Text>
-        <View style={styles.coverbutton}>
+        <View>
           <Image 
               source={{uri: `https://covers.openlibrary.org/b/isbn/${isbn}-L.jpg`}}
               style={styles.cover}
@@ -54,24 +53,10 @@ function BacklogDisplay({ backlog, navigation, handleUpdateBacklog }) {
 
 export default BacklogDisplay
 
-const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: '#fff',
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
+const styles = StyleSheet.create({    
     cover: {
         height: 85,
         width: 55
-    },
-    title: {
-        fontSize: 20,
-        fontWeight: 'bold'
-    },
-    coverbutton: {
-      flex: 1,
-      flexDirection: 'row'
     }
   });
    

@@ -142,12 +142,12 @@ function Details({route, navigation}) {
                 onPress={() => processSetFavTitle()}/>)
 
     return(
-      <View style={styles.container}>
+      <View>
         <Image 
             source={{uri: `https://covers.openlibrary.org/b/isbn/${isbn}-L.jpg`}}
             style={styles.cover}
         />
-        <Text style={styles.title}>{title}</Text>
+        <Text>{title}</Text>
         <Text>{author}</Text>
         <Text>{isbn}</Text>
         {backlogButton}        
@@ -164,18 +164,8 @@ function Details({route, navigation}) {
 export default Details
 
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: '#fff',
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
     cover: {
         height: 340,
         width: 220
-    },
-    title: {
-        fontSize: 20,
-        fontWeight: 'bold'
     }
   });

@@ -55,10 +55,9 @@ function Backlog({navigation}) {
     })   
     
     return(
-      <View style={styles.container}>
-        <View style={styles.containertwo}>
+      <View>
+        <View>
             <Picker
-              style={styles.picker}
               selectedValue={backlogFilter} 
               label={backlogFilter}
               onValueChange={(itemValue, itemIndex) => setBacklogFilter(itemValue)}
@@ -71,7 +70,6 @@ function Backlog({navigation}) {
 
             <Text>Filter by title: </Text>
             <TextInput
-              style={styles.textfield} 
               placeholder={'enter query'} 
               onChangeText={(value) => setTitleFilter(value)}
               value={titleFilter}
@@ -85,29 +83,5 @@ function Backlog({navigation}) {
 export default Backlog
 
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-        backgroundColor: '#38434D',
-        alignItems: 'center',
-        backgroundColor: ''
-    },
-    picker: {
-        alignItems: 'center',
-        borderWidth: 2,
-        width: 300,
-        backgroundColor: '#ccc'
-    },
-    textfield: {
-        backgroundColor: '#fff',
-        width: 300,
-        borderWidth: 2,
-        paddingLeft: 10,
-        marginBottom: 5
-      },
-    containertwo: {
-      backgroundColor: '#73b4ca',
-      alignItems: 'center',
-      justifyContent: 'center',
-      borderBottomWidth:2
-      }
+    
   });

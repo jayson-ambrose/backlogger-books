@@ -24,7 +24,7 @@ function Reviews({ navigation }) {
     const displayReviews = reviewsList.map((review) => {
         return (
             <View key={review.id}>
-                <Text style={styles.username}>{review.user.username}</Text>
+                <Text>{review.user.username}</Text>
                 <Text>{review.review_text}</Text>
                 <Text>{review.rating}/10</Text>                
             </View>
@@ -49,8 +49,8 @@ function Reviews({ navigation }) {
         ])}
 
     return(
-        <View style={styles.container}>
-            <Text style={styles.title}>{title}</Text>
+        <View>
+            <Text >{title}</Text>
             <Text>{author}</Text>
             <Text>{isbn}</Text>
             {reviewBookButton}

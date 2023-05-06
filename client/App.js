@@ -25,57 +25,113 @@ export default function App() {
             <Stack.Screen 
               name = 'LandingScreen'
               component ={LandingScreen}
-              options={{title: 'Home Screen'}}
+              options={{
+                title: 'Home Screen',
+                headerStyle: {
+                  backgroundColor: '#f8f6ea'
+                },
+                headerTintColor: '#091e2b'
+              }}
             />
             <Stack.Screen 
               name = 'CreateAccount'
               component ={CreateAccount}
-              options={{title: 'Create Account'}}
+              options={{
+                title: 'Create Account',
+                headerStyle: {
+                  backgroundColor: '#f8f6ea'
+                },
+                headerTintColor: '#091e2b'}}
             />
             <Stack.Screen 
               name = 'Search'
               component ={Search}
-              options={{title: 'Search Open Library'}}
+              options={{
+                title: 'Search Open Library',
+                headerStyle: {
+                  backgroundColor: '#f8f6ea'
+                },
+                headerTintColor: '#091e2b'}}
             />
             <Stack.Screen 
               name = 'Details'
               component ={Details}
-              options={{title: 'Details'}}
+              options={{
+                title: 'Details',
+                headerStyle: {
+                  backgroundColor: '#f8f6ea'
+                },
+                headerTintColor: '#091e2b'}}
             />
             <Stack.Screen 
               name = 'AccountDetails'
               component ={AccountDetails}
-              options={{title: 'Account Details'}}
+              options={{
+                title: 'Account Details',
+                headerStyle: {
+                  backgroundColor: '#f8f6ea'
+                },
+                headerTintColor: '#091e2b'}}
             />
             <Stack.Screen 
               name = 'ScanBarcode'
               component ={ScanBarcode}
-              options={{title: 'ScanBarcode'}}
+              options={{
+                title: 'ScanBarcode',
+                headerStyle: {
+                  backgroundColor: '#f8f6ea'
+                },
+                headerTintColor: '#091e2b'}}
             />
             <Stack.Screen 
               name = 'Backlog'
               component ={Backlog}
-              options={{title: 'Backlog'}}
+              options={{
+                title: 'Backlog',
+                headerStyle: {
+                  backgroundColor: '#f8f6ea'
+                },
+                headerTintColor: '#091e2b'}}
             />
             <Stack.Screen 
               name = 'Reviews'
               component ={Reviews}
-              options={{title: 'Reviews'}}
+              options={{
+                title: 'Reviews',
+                headerStyle: {
+                  backgroundColor: '#f8f6ea'
+                },
+                headerTintColor: '#091e2b'}}
             />
             <Stack.Screen 
               name = 'WriteReview'
               component ={WriteReview}
-              options={{title: 'Write Review'}}
+              options={{
+                title: 'Write Review',
+                headerStyle: {
+                  backgroundColor: '#f8f6ea'
+                },
+                headerTintColor: '#091e2b'}}
             />
             <Stack.Screen 
               name = 'ChangePassword'
               component ={ChangePassword}
-              options={{title: 'Change Password'}}
+              options={{
+                title: 'Change Password',
+                headerStyle: {
+                  backgroundColor: '#f8f6ea'
+                },
+                headerTintColor: '#091e2b'}}
             />            
             <Stack.Screen 
               name = 'ConfirmDelete'
               component ={ConfirmDelete}
-              options={{title: 'Confirm Delete'}}
+              options={{
+                title: 'Confirm Delete',
+                headerStyle: {
+                  backgroundColor: '#f8f6ea'
+                },
+                headerTintColor: '#091e2b'}}
             />            
           </Stack.Navigator>      
       </NavigationContainer>

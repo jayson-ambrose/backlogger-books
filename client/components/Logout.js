@@ -4,6 +4,7 @@ import React, {useState} from 'react'
 import { Button, StyleSheet, Text, View, TextInput } from 'react-native';
 import {useRecoilState, useSetRecoilState, useRecoilValue} from 'recoil'
 import {activeAccountAtom, loggedInAtom} from './lib/atoms'
+import CustomButton from './CustomButton';
 
 function Logout({navigation}) {
 
@@ -20,9 +21,9 @@ function Logout({navigation}) {
   }
     
   return(
-    <View style={styles.container}>
+    <View>
         <Text>{activeAccount ? `Welcome ${activeAccount.username}`: null}</Text>
-        <Button color='#d64d3e' title='Logout' onPress={handleLogout}/>
+        <CustomButton color='#c9272b' title='Logout' onPress={handleLogout}/>
     </View>
   )
 }
@@ -30,18 +31,10 @@ function Logout({navigation}) {
 export default Logout
 
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: '#73b4ca',
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-    textfield: {
-      backgroundColor: '#fff',
-      width: 300,
-      borderWidth: 2,
-      paddingLeft: 10,
-      marginBottom: 5
-    }
+  buttonContainer: {
+    flexDirection:'row',
+    justifyContent:'center',
+    margin: 10
+  }
   });
    

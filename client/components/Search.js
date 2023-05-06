@@ -43,10 +43,9 @@ function Search({navigation}) {
     }
 
     return(
-        <View style={styles.container}>
-            <View style={styles.containertwo}>
+        <View>
+            <View>
                 <Picker
-                    style={styles.picker}
                     selectedValue={searchFilter} 
                     label={searchFilter}
                     onValueChange={(itemValue, itemIndex) => setSearchFilter(itemValue)}
@@ -59,7 +58,6 @@ function Search({navigation}) {
 
                 <Text>Enter {searchFilter} to search: </Text>
                 <TextInput
-                    style={styles.textfield} 
                     placeholder={'enter query'} 
                     onSubmitEditing={handleSearch}
                     onChangeText={(value) => setQuery(value)}
@@ -79,31 +77,6 @@ function Search({navigation}) {
 export default Search
 
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-        backgroundColor: '#38434D',
-        alignItems: 'center',
-        backgroundColor: ''
-    },
-    picker: {
-        alignItems: 'center',
-        borderWidth: 2,
-        width: 300,
-        backgroundColor: '#ccc'
-    },
-    textfield: {
-        backgroundColor: '#fff',
-        width: 300,
-        borderWidth: 2,
-        paddingLeft: 10,
-        marginBottom: 5
-      },
-    containertwo: {
-      backgroundColor: '#73b4ca',
-      alignItems: 'center',
-      justifyContent: 'center',
-      borderBottomWidth:2
-      }
   });
 
   // img src="https://covers.openlibrary.org/b/isbn/9780385533225-S.jpg" example cover image url trailing S M or L for small medium or large
