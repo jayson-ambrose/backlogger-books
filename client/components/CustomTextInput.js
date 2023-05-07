@@ -6,6 +6,7 @@ function CustomTextInput({
     placeholder,
     controlledText,
     handleChangeText,
+    submitEditing=null,
     secure}) {
 
     const [focused, setFocused] = useState(false)
@@ -25,6 +26,7 @@ function CustomTextInput({
             onChangeText={(value) => handleChangeText(value)}
             secureTextEntry={secure}
             cursorColor={highlightColor}
+            onSubmitEditing={submitEditing}
         />
     )
 }

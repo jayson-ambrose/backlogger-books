@@ -8,11 +8,11 @@ import CustomTextInput from './CustomTextInput';
 
 function Login({navigation}) {
 
-  const [userText, setUserText] = useState('')
-  const [passText, setPassText] = useState('')
-
   const setActiveAccount = useSetRecoilState(activeAccountAtom)
   const setLoggedIn = useSetRecoilState(loggedInAtom)
+
+  const [userText, setUserText] = useState('')
+  const [passText, setPassText] = useState('')  
 
   function handleChangeUserText(value) {
     setUserText(value)
@@ -72,6 +72,7 @@ function Login({navigation}) {
             controlledText={passText}
             secure={true}
             highlightColor = "#60292e"
+            submitEditing={() => handleLogin(userText, passText)}
           />
           <View style={styles.buttonContainer}>
             <CustomButton

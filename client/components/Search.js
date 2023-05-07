@@ -4,6 +4,8 @@ import { Button, StyleSheet, Text, View, TextInput} from 'react-native'
 import SearchDisplay from './SearchDisplay'
 import { useRecoilValue } from 'recoil'
 import { activeAccountAtom } from './lib/atoms'
+import CustomButton from './CustomButton'
+import CustomTextInput from './CustomTextInput'
 
 
 function Search({navigation}) {
@@ -13,6 +15,10 @@ function Search({navigation}) {
     const [query, setQuery] = useState('')
     const [bookList, setBookList] = useState([])
     const [searchFilter, setSearchFilter] = useState('author')
+
+    function handleChangeQueryText (value) {
+        setQuery(value)
+    }
     
     const handleSearch = () => {
 
@@ -43,33 +49,35 @@ function Search({navigation}) {
     }
 
     return(
-        <View>
-            <View>
+        <View style={styles.mainContainer}>
+            <View style={{width: "90%"}}>
                 <Picker
                     selectedValue={searchFilter} 
                     label={searchFilter}
                     onValueChange={(itemValue, itemIndex) => setSearchFilter(itemValue)}
-                    enabled={true}
-                >
+                    enabled={true}>
                     <Picker.Item label='Title' value='title' />
                     <Picker.Item label='Author' value='author' />
                     <Picker.Item label='ISBN' value='isbn' />
                 </Picker>
-
-                <Text>Enter {searchFilter} to search: </Text>
-                <TextInput
-                    placeholder={'enter query'} 
-                    onSubmitEditing={handleSearch}
-                    onChangeText={(value) => setQuery(value)}
-                    value={query}
+                <CustomTextInput 
+                    placeholder={`Enter ${searchFilter}...`}
+                    handleChangeText={handleChangeQueryText}
+                    controlledText={query}
+                    highlightColor='#60292e'
+                    submitEditing={handleSearch}
                 />
-                <Button 
-                    title={'Search'} 
-                    type={'submit'}
+                <CustomButton 
+                    title={'Search'}
                     onPress={handleSearch}
-                />
+                    style={{margin: 10}} 
+                    color={'#377ba4'}/>
+
             </View>
-            <SearchDisplay bookList={bookList} navigation={navigation}/>
+            <View style={{width: "90%"}}>
+                <SearchDisplay bookList={bookList} navigation={navigation}/>
+            </View>
+            
         </View>
     )
 }   
@@ -77,6 +85,11 @@ function Search({navigation}) {
 export default Search
 
 const styles = StyleSheet.create({
+    mainContainer: {
+        flex: 1,
+        alignItems: 'center',
+        backgroundColor: '#f8f6ea',
+      }
   });
 
   // img src="https://covers.openlibrary.org/b/isbn/9780385533225-S.jpg" example cover image url trailing S M or L for small medium or large

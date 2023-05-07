@@ -42,28 +42,41 @@ function CreateAccount({ navigation }) {
       })
   }
 
+  function handleChangeUserText (value) {
+    setUserText(value)
+  }
+  function handleChangePassText (value) {
+    setPassText(value)
+  }
+  function handleChangeRePassText (value) {
+    setRePassText(value)
+  }
+
     return(
         <View style={styles.mainContainer}>
           <Image
-        source={require('../assets/banner.png')} 
-        style={styles.banner}/>  
+            source={require('../assets/banner.png')} 
+            style={styles.banner}/>  
           <View style={{width: "90%"}}>
-            <CustomTextInput 
+          <CustomTextInput 
               placeholder={'Enter Username...'}
-              value={userText}
-              onChangeText={(value) => setUserText(value)}
+              controlledText={userText}
+              handleChangeText={handleChangeUserText}
+              highlightColor={'#60292e'}
             />
           <CustomTextInput 
-              secureTextEntry={true} 
+              secure={true} 
               placeholder={'Enter Password...'}
-              value={passText}
-              onChangeText={(value) => setPassText(value)}
+              controlledText={passText}
+              handleChangeText={handleChangePassText}
+              highlightColor={'#60292e'}
             />
             <CustomTextInput 
-              secureTextEntry={true} 
+              secure={true} 
               placeholder={'Re-enter Password...'}
-              value={rePassText}
-              onChangeText={(value) => setRePassText(value)}
+              controlledText={rePassText}
+              handleChangeText={handleChangeRePassText}
+              highlightColor={'#60292e'}
             />
             <CustomButton
               style={{margin: 10}} 

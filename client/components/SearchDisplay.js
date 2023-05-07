@@ -2,6 +2,7 @@ import React from 'react'
 
 // import native components here
 import { Button, StyleSheet, Text, View, ScrollView, Image } from 'react-native';
+import CustomButton from './CustomButton';
 
 function SearchDisplay({ bookList, navigation }) {
 
@@ -17,9 +18,11 @@ function SearchDisplay({ bookList, navigation }) {
                     source={{uri: `https://covers.openlibrary.org/b/isbn/${isbn}-L.jpg`}}
                     style={styles.cover}
                 />
-                <Button 
+                <CustomButton 
                     title={'See Details'}
                     onPress={() => navigation.navigate('Details', {isbn: isbn, title: title, author: author})}
+                    color={'#377ba4'}
+                    width={200}
                 />
                 <Text/>
             </View>
