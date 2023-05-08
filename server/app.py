@@ -148,7 +148,10 @@ class Books(Resource):
     
     def post(self):
         req = request.get_json()
+
+        print(req)
         book = Book.query.filter(Book.isbn == req['isbn']).one_or_none()
+        
         
         if not book:
             new_book = Book(title=req['title'], author=req['author'], isbn=req['isbn'])

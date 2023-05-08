@@ -27,14 +27,19 @@ function WriteReview({ navigation }) {
             body: JSON.stringify(reviewPayload)
         })
         .then(resp => {
+            console.log(resp.status)
             if (resp.ok){
+                console.log(resp.json())
                 resp.json().then(data => {
                     Alert.alert('Review posted')
                     navigation.navigate('Details', {isbn: reviewBook.isbn, title: reviewBook.title, author: reviewBook.author})
                 })}
-            else {
+            else if (resp.status == '401') {
                 Alert.alert('Review failed.', 'You have likely already reviewed this book.')
-            }        
+            } 
+            else {
+                Alert.alert('Review failed.', 'It is possible your user account has been suspended or deleted')
+            }       
         })
     }
 

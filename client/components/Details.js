@@ -6,6 +6,8 @@ import CustomButton from './CustomButton';
 
 function Details({route, navigation}) {
 
+    console.log(route.params, '<----- route params')
+
     const {isbn, title, author} = route.params
 
     const[activeAccount, setActiveAccount] = useRecoilState(activeAccountAtom)
