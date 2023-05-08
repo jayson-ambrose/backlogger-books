@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react'
 import {Picker} from '@react-native-picker/picker'
-import { Button, StyleSheet, Text, View, TextInput} from 'react-native'
+import { StyleSheet, Text, View, ScrollView} from 'react-native'
 import SearchDisplay from './SearchDisplay'
 import { useRecoilValue } from 'recoil'
 import { activeAccountAtom } from './lib/atoms'
@@ -48,6 +48,16 @@ function Search({navigation}) {
         .catch(error => {console.log(error)})
     }
 
+    const displayResults = bookList.map((book) => {
+
+        return (
+        <SearchDisplay 
+            navigation={navigation}
+            book={book}
+            key={book.isbn + book.title}
+        />
+        )})
+
     return(
         <View style={styles.mainContainer}>
             <View style={{width: "90%"}}>
@@ -74,9 +84,10 @@ function Search({navigation}) {
                     color={'#377ba4'}/>
 
             </View>
-            <View style={{width: "90%"}}>
-                <SearchDisplay bookList={bookList} navigation={navigation}/>
-            </View>
+            <ScrollView style={{width: "90%"}}>
+                {/* <SearchDisplay bookList={bookList} navigation={navigation}/> */}
+                {displayResults}
+            </ScrollView>
             
         </View>
     )

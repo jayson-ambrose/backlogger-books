@@ -5,7 +5,8 @@ function CustomButton({
     onPress, 
     color='black', 
     title='Button', 
-    width=null }) {
+    width=null,
+    height=null }) {
 
     const [buttonColor, setButtonColor] = useState(color)
 
@@ -18,7 +19,10 @@ function CustomButton({
 
     return(
         <Pressable 
-        style={[styles.button, {backgroundColor: color, width: width}]} 
+        style={[styles.button, {
+            backgroundColor: color,
+            width: width,
+            height: height}]} 
         onPress={() => {
             onPress()
             flash()

@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Button, StyleSheet, Text, View, ScrollView, Image, Switch } from 'react-native';
+import CustomButton from './CustomButton';
 
 function BacklogDisplay({ backlog, navigation, handleUpdateBacklog }) {
 
@@ -28,26 +29,29 @@ function BacklogDisplay({ backlog, navigation, handleUpdateBacklog }) {
    }
 
     return (
-      <View key={isbn}>
-        <Text>{title}</Text>
-        <Text>{author}</Text>
-        <Text>{isbn} </Text>
-        <View>
+      <View key={isbn} style={styles.mainContainer}>   
+        <View style={styles.resultContainer}>   
           <Image 
               source={{uri: `https://covers.openlibrary.org/b/isbn/${isbn}-L.jpg`}}
               style={styles.cover}
           />
-          <Text>  Completed?</Text>
+          <View>
+            <Text>{title}</Text>
+            <Text>{author}</Text>
+            <Text>{isbn} </Text>
+          </View>
           <Switch 
             onValueChange={(value) => {handleChangeToggle(value)}}
             value={switchValue}
           />
-        </View>
-        <Button 
-          title={'See Details'}
-          onPress={() => navigation.navigate('Details', {isbn: isbn, title: title, author: author, id: id})}
-        />
-        <Text/>
+        </View> 
+        <View style={styles.buttonContainer}>
+          <CustomButton 
+            title={'See Details'}
+            onPress={() => navigation.navigate('Details', {isbn: isbn, title: title, author: author, id: id})}
+            color='#377ba4'
+          />
+        </View> 
       </View>
     )}
 
@@ -55,8 +59,23 @@ export default BacklogDisplay
 
 const styles = StyleSheet.create({    
     cover: {
-        height: 85,
-        width: 55
+        height: 95,
+        width: 60
+    },
+    mainContainer: {
+        borderBottomWidth: 1,
+        borderBottomColor: '#60292e',
+    },
+    resultContainer: {
+        margin:10,
+        flexDirection: 'row',
+        justifyContent: 'space-between'
+        
+    },
+    buttonContainer : {
+        flexDirection:'row',
+        justifyContent: 'flex-end',
+        paddingBottom: 10
     }
   });
    
