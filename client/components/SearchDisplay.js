@@ -8,13 +8,13 @@ function SearchDisplay({ book, navigation }) {
 
     return(
         <View key={isbn} style={styles.mainContainer}>
+            <Text style={styles.titleLine}>{title}</Text>
             <View style={styles.resultContainer}>
                 <Image 
                     source={{uri: `https://covers.openlibrary.org/b/isbn/${isbn}-L.jpg`}}
                     style={styles.cover}
                 />
-                <View>
-                    <Text>{title}</Text>
+                <View style={{marginLeft: 50, marginTop: 20}}>                    
                     <Text>{author}</Text>
                     <Text>{isbn} </Text>
                 </View>
@@ -51,6 +51,10 @@ const styles = StyleSheet.create({
         flexDirection:'row',
         justifyContent: 'flex-end',
         paddingBottom: 10
+    },
+    titleLine: {
+      fontSize: 15,
+      fontWeight: 'bold'
     }
   });
    

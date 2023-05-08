@@ -30,7 +30,10 @@ export default function App() {
                 headerStyle: {
                   backgroundColor: '#f8f6ea'
                 },
-                headerTintColor: '#091e2b'
+                headerTintColor: '#091e2b',
+                headerTitleStyle: {
+                  color: '#60292e'
+                }
               }}
             />
             <Stack.Screen 
@@ -41,7 +44,10 @@ export default function App() {
                 headerStyle: {
                   backgroundColor: '#f8f6ea'
                 },
-                headerTintColor: '#091e2b'}}
+                headerTintColor: '#091e2b',
+                headerTitleStyle: {
+                  color: '#60292e'
+                }}}
             />
             <Stack.Screen 
               name = 'Search'
@@ -51,7 +57,10 @@ export default function App() {
                 headerStyle: {
                   backgroundColor: '#f8f6ea'
                 },
-                headerTintColor: '#091e2b'}}
+                headerTintColor: '#091e2b',
+                headerTitleStyle: {
+                  color: '#60292e'
+                }}}
             />
             <Stack.Screen 
               name = 'Details'
@@ -61,7 +70,10 @@ export default function App() {
                 headerStyle: {
                   backgroundColor: '#f8f6ea'
                 },
-                headerTintColor: '#091e2b'}}
+                headerTintColor: '#091e2b',
+                headerTitleStyle: {
+                  color: '#60292e'
+                }}}
             />
             <Stack.Screen 
               name = 'AccountDetails'
@@ -71,7 +83,10 @@ export default function App() {
                 headerStyle: {
                   backgroundColor: '#f8f6ea'
                 },
-                headerTintColor: '#091e2b'}}
+                headerTintColor: '#091e2b',
+                headerTitleStyle: {
+                  color: '#60292e'
+                }}}
             />
             <Stack.Screen 
               name = 'ScanBarcode'
@@ -81,7 +96,10 @@ export default function App() {
                 headerStyle: {
                   backgroundColor: '#f8f6ea'
                 },
-                headerTintColor: '#091e2b'}}
+                headerTintColor: '#091e2b',
+                headerTitleStyle: {
+                  color: '#60292e'
+                }}}
             />
             <Stack.Screen 
               name = 'Backlog'
@@ -91,7 +109,10 @@ export default function App() {
                 headerStyle: {
                   backgroundColor: '#f8f6ea'
                 },
-                headerTintColor: '#091e2b'}}
+                headerTintColor: '#091e2b',
+                headerTitleStyle: {
+                  color: '#60292e'
+                }}}
             />
             <Stack.Screen 
               name = 'Reviews'
@@ -101,7 +122,10 @@ export default function App() {
                 headerStyle: {
                   backgroundColor: '#f8f6ea'
                 },
-                headerTintColor: '#091e2b'}}
+                headerTintColor: '#091e2b',
+                headerTitleStyle: {
+                  color: '#60292e'
+                }}}
             />
             <Stack.Screen 
               name = 'WriteReview'
@@ -111,7 +135,10 @@ export default function App() {
                 headerStyle: {
                   backgroundColor: '#f8f6ea'
                 },
-                headerTintColor: '#091e2b'}}
+                headerTintColor: '#091e2b',
+                headerTitleStyle: {
+                  color: '#60292e'
+                }}}
             />
             <Stack.Screen 
               name = 'ChangePassword'
@@ -121,7 +148,10 @@ export default function App() {
                 headerStyle: {
                   backgroundColor: '#f8f6ea'
                 },
-                headerTintColor: '#091e2b'}}
+                headerTintColor: '#091e2b',
+                headerTitleStyle: {
+                  color: '#60292e'
+                }}}
             />            
             <Stack.Screen 
               name = 'ConfirmDelete'
@@ -131,7 +161,10 @@ export default function App() {
                 headerStyle: {
                   backgroundColor: '#f8f6ea'
                 },
-                headerTintColor: '#091e2b'}}
+                headerTintColor: '#091e2b',
+                headerTitleStyle: {
+                  color: '#60292e'
+                }}}
             />            
           </Stack.Navigator>      
       </NavigationContainer>

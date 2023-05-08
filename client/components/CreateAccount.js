@@ -58,32 +58,32 @@ function CreateAccount({ navigation }) {
             source={require('../assets/banner.png')} 
             style={styles.banner}/>  
           <View style={{width: "90%"}}>
-          <CustomTextInput 
-              placeholder={'Enter Username...'}
-              controlledText={userText}
-              handleChangeText={handleChangeUserText}
-              highlightColor={'#60292e'}
-            />
-          <CustomTextInput 
-              secure={true} 
-              placeholder={'Enter Password...'}
-              controlledText={passText}
-              handleChangeText={handleChangePassText}
-              highlightColor={'#60292e'}
-            />
             <CustomTextInput 
-              secure={true} 
-              placeholder={'Re-enter Password...'}
-              controlledText={rePassText}
-              handleChangeText={handleChangeRePassText}
-              highlightColor={'#60292e'}
-            />
-            <CustomButton
-              style={{margin: 10}} 
-              title={'Create Account'} 
-              onPress={() => handleSubmit(userText, passText, rePassText)}
-              color='#377ba4'
-            />
+                placeholder={'Enter Username...'}
+                controlledText={userText}
+                handleChangeText={handleChangeUserText}
+                highlightColor={'#60292e'}
+              />
+            <CustomTextInput 
+                secure={true} 
+                placeholder={'Enter Password...'}
+                controlledText={passText}
+                handleChangeText={handleChangePassText}
+                highlightColor={'#60292e'}
+              />
+              <CustomTextInput 
+                secure={true} 
+                placeholder={'Re-enter Password...'}
+                controlledText={rePassText}
+                handleChangeText={handleChangeRePassText}
+                highlightColor={'#60292e'}
+              />
+              <CustomButton
+                style={{margin: 10}} 
+                title={'Create Account'} 
+                onPress={() => handleSubmit(userText, passText, rePassText)}
+                color='#377ba4'
+              />
           </View>
         </View>
     )

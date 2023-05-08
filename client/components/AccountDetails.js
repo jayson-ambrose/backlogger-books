@@ -2,6 +2,7 @@ import React from 'react'
 import {useRecoilValue} from 'recoil'
 import {activeAccountAtom} from './lib/atoms'
 import { Button, StyleSheet, Text, View } from 'react-native';
+import CustomButton from './CustomButton';
 
 function AccountDetails({navigation}) {
 
@@ -19,7 +20,7 @@ function AccountDetails({navigation}) {
         )})  
 
     return(
-        <View>
+        <View style={styles.mainContainer}>
             <Text>{activeAccount.username}</Text>
             <Text>
                 {activeAccount.favorite_title ? 
@@ -31,13 +32,16 @@ function AccountDetails({navigation}) {
                     `Favorite Author: ${activeAccount.favorite_author}` :
                     "No favorite author selected"}
             </Text>
-            <Button 
-                title='Change Password'
-                onPress={() => navigation.navigate('ChangePassword')}/>
-            <Button 
-                color='#d64d3e' 
-                title='Delete Account'
-                onPress={() => navigation.navigate('ConfirmDelete')}/>
+            <View>
+                <CustomButton 
+                    title='Change Password'
+                    onPress={() => navigation.navigate('ChangePassword')}
+                    color={'#377ba4'}/>
+                <CustomButton 
+                    color='#c9272b' 
+                    title='Delete Account'
+                    onPress={() => navigation.navigate('ConfirmDelete')}/>
+            </View>
             <Text>Books Reviewed({numBooksReviewed}):</Text>
             {booksReviewed}
         </View>)}
@@ -45,5 +49,10 @@ function AccountDetails({navigation}) {
 export default AccountDetails
 
 const styles = StyleSheet.create({
+    mainContainer: {
+        flex: 1,
+        alignItems: 'center',
+        backgroundColor: '#f8f6ea',
+      },
   });
    

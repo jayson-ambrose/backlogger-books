@@ -1,7 +1,9 @@
 import React, {useState} from 'react'
-import { Button, StyleSheet, Text, View, TextInput, Alert} from 'react-native';
+import { StyleSheet, View, Image, Alert } from 'react-native';
 import { useSetRecoilState, useRecoilState } from 'recoil';
 import { activeAccountAtom,loggedInAtom } from './lib/atoms';
+import CustomButton from './CustomButton';
+import CustomTextInput from './CustomTextInput';
 
 function ChangePassword({ navigation }) {
 
@@ -11,6 +13,18 @@ function ChangePassword({ navigation }) {
   const [oldPassText, setOldPassText] = useState('')
   const [passText, setPassText] = useState('')
   const [rePassText, setRePassText] = useState('')
+
+  function handleChangePassText(value) {
+    setPassText(value)
+  }
+
+  function handleChangeOldPassText(value) {
+    setOldPassText(value)
+  }
+  
+  function handleChangeRePassText(value) {
+    setRePassText(value)    
+  }
 
   function handleSubmit(oldPass, pass, rePass) {
     
@@ -41,32 +55,37 @@ function ChangePassword({ navigation }) {
   }
 
     return(
-        <View>
-          <View>
-            <View>
-                <TextInput 
-                    secureTextEntry={true} 
-                    placeholder={'Enter current password...'}
-                    value={oldPassText}
-                    onChangeText={(value) => setOldPassText(value)}
-                />
-                <TextInput 
-                    secureTextEntry={true} 
-                    placeholder={'Enter new password...'}
-                    value={passText}
-                    onChangeText={(value) => setPassText(value)}
-                />
-                <TextInput 
-                    secureTextEntry={true} 
-                    placeholder={'Re-enter new password...'}
-                    value={rePassText}
-                    onChangeText={(value) => setRePassText(value)}
-                />
-                <Button 
-                    title={'Change Password'} 
-                    onPress={() => handleSubmit(oldPassText, passText, rePassText)}
-                />
-            </View>
+        <View style={styles.mainContainer}>
+            <Image
+            source={require('../assets/banner.png')} 
+            style={styles.banner}/>  
+          <View style={{width: '90%'}}>
+            <CustomTextInput 
+                secureTextEntry={true} 
+                placeholder={'Enter current password...'}
+                controlledText={oldPassText}
+                handleChangeText={(value) => setOldPassText(value)}
+                highlightColor={'#60292e'}
+            />
+            <CustomTextInput 
+                secureTextEntry={true} 
+                placeholder={'Enter new password...'}
+                controlledText={passText}
+                handleChangeText={(value) => setPassText(value)}
+                highlightColor={'#60292e'}
+            />
+            <CustomTextInput 
+                secureTextEntry={true} 
+                placeholder={'Re-enter new password...'}
+                controlledText={rePassText}
+                handleChangeText={(value) => setRePassText(value)}
+                highlightColor={'#60292e'}
+            />
+            <CustomButton 
+                title={'Change Password'} 
+                onPress={() => handleSubmit(oldPassText, passText, rePassText)}
+                color={'#377ba4'}
+            />
           </View>
         </View>
     )
@@ -75,6 +94,17 @@ function ChangePassword({ navigation }) {
 export default ChangePassword
 
 const styles = StyleSheet.create({
-     
+    mainContainer: {
+        flex: 1,
+        alignItems: 'center',
+        backgroundColor: '#f8f6ea',
+      },
+      titleLine: {
+        fontSize: 20
+      },
+      banner: {
+        width: '100%',
+        resizeMode: 'contain',
+      }     
   });
    

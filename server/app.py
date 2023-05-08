@@ -196,18 +196,20 @@ class ReviewsByBookId(Resource):
         rev_user = User.query.filter(User.id == req['user_id']).one_or_none()
         rev_book = Book.query.filter(Book.id == id).one_or_none()
 
+        print(rev_user, rev_book)
+
         if rev_user in rev_book.reviewed_by:
             return make_response({"error":"401: User already reviewed this book"}, 401) 
 
         try:
             new_review = Review(rating=req['rating'], review_text=req['text'], user=rev_user, book=rev_book)
-
             db.session.add(new_review)
             print('before submit')
+
             db.session.commit()
             print('after submit')
 
-            return(new_review.to_dict(only=('review_text', 'rating', 'id', 
+            return make_response (new_review.to_dict(only=('review_text', 'rating', 'id', 
                                             'user', '-user.reviews', '-user.backlogs')), 201)            
 
         except:

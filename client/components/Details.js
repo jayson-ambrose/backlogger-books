@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react'
 import { Button, StyleSheet, Text, View, Image, Alert} from 'react-native';
 import { useRecoilState } from 'recoil'
 import { activeAccountAtom, bookAtom } from './lib/atoms';
+import CustomButton from './CustomButton';
 
 function Details({route, navigation}) {
 
@@ -117,44 +118,61 @@ function Details({route, navigation}) {
             {text: 'Cancel'}])}
 
     let backlogButton = (
-        <Button title="Backlog Book" color={'#adc6ec'} onPress={() => promptLogin()}/>)
+        <CustomButton 
+            title="Backlog Book" 
+            color={'#bbb6c7'} 
+            onPress={() => promptLogin()}/>)
     let favAuthButton = (
-        <Button
+        <CustomButton
             title='Set Favorite Author'
-            onPress={() => Alert.alert('Log in to set your favorite author.')}/>)
+            onPress={() => Alert.alert('Log in to set your favorite author.')}
+            color={'#bbb6c7'} 
+            />)
     let favTitleButton = (
-        <Button
+        <CustomButton
             title='Set Favorite Title'
-            onPress={() => Alert.alert('Log in to set your favorite title.')}/>)
+            onPress={() => Alert.alert('Log in to set your favorite title.')}
+            color={'#bbb6c7'} 
+            />)
 
     if (activeAccount != null) {
         backlogButton = (
-            <Button title="Backlog Book" onPress={() => processBacklog()}/>)}
+            <CustomButton 
+                title="Backlog Book" 
+                onPress={() => processBacklog()}
+                color={'#377ba4'}
+                />)
 
         favAuthButton = (
-            <Button
+            <CustomButton
                 title='Set Favorite Author'
-                onPress={() => processSetFavAuthor()}/>)
+                onPress={() => processSetFavAuthor()}
+                color={'#377ba4'}
+                />)
 
         favTitleButton = (
-            <Button
+            <CustomButton
                 title='Set Favorite Title'
-                onPress={() => processSetFavTitle()}/>)
+                onPress={() => processSetFavTitle()}
+                color={'#377ba4'}
+                />)
+            }
 
     return(
-      <View>
+      <View style={styles.mainContainer}>
         <Image 
             source={{uri: `https://covers.openlibrary.org/b/isbn/${isbn}-L.jpg`}}
             style={styles.cover}
         />
         <Text>{title}</Text>
         <Text>{author}</Text>
-        <Text>{isbn}</Text>
-        {backlogButton}        
-        <Button 
+        <Text>{isbn}</Text>              
+        <CustomButton 
             title="Reviews" 
             onPress={() => navigation.navigate('Reviews', {isbn: isbn, title: title, author: author})}
+            color={'#377ba4'}
         />
+        {backlogButton}  
         {favAuthButton}   
         {favTitleButton}    
       </View>
@@ -164,6 +182,11 @@ function Details({route, navigation}) {
 export default Details
 
 const styles = StyleSheet.create({
+    mainContainer: {
+        flex: 1,
+        alignItems: 'center',
+        backgroundColor: '#f8f6ea',
+      },
     cover: {
         height: 340,
         width: 220

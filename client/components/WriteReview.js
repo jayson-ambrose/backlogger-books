@@ -39,7 +39,7 @@ function WriteReview({ navigation }) {
     }
 
     return(
-        <View style={styles.container}>
+        <View style={styles.mainContainer}>
             <Text style={styles.title}>{reviewBook.title}</Text>
             <Text>{reviewBook.author}</Text>
             <Text>{reviewBook.isbn}</Text>
@@ -50,7 +50,7 @@ function WriteReview({ navigation }) {
                 multiline 
                 numberOfLines={6}
                 maxLength={250}
-                style={styles.reviewfield}
+                style={styles.reviewField}
                 value={textField}
                 onChangeText={(value) => setTextField(value)} 
             />
@@ -86,30 +86,32 @@ function WriteReview({ navigation }) {
 export default WriteReview
 
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: '#fff',
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-    reviewfield: {
+    mainContainer: {
+        flex: 1,
+        alignItems: 'center',
+        backgroundColor: '#f8f6ea',
+      },
+    reviewField: {
       backgroundColor: '#fff',
       borderColor: "#000000",
-      borderWidth: 2,
+      borderWidth: 1,
       width:300,
       paddingLeft: 10,
       paddingRight: 10,
+      borderRadius: 4
     },
     picker: {
-        width: 200,
+        width: 100,
         height: 20,
-        backgroundColor: '#ccc'
+        backgroundColor: '#f8f6ea',
+        color: '#60292e'
     },
     ratingline: {
         flexDirection: 'row',
     },
     ratingText: {
         fontSize: 20,
+        marginTop: 12
     },
     title: {
         fontSize: 20,

@@ -50,8 +50,7 @@ export default function LandingScreen({navigation}) {
         style={styles.banner}/>      
       {loggedIn ? <Logout />: <Login navigation={navigation}/>}       
         <View>
-          {accountDetailsButton}
-          {backlogButton}
+          
           <CustomButton 
             color={'#377ba4'}
             title={'Search'} 
@@ -61,7 +60,9 @@ export default function LandingScreen({navigation}) {
             color={'#377ba4'}
             title={'Scan Barcode'} 
             onPress={() => navigation.navigate('ScanBarcode')}        
-          />
+          />          
+          {backlogButton}
+          {accountDetailsButton}
         </View>          
     </View>     
   );

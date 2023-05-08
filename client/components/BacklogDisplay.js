@@ -29,21 +29,26 @@ function BacklogDisplay({ backlog, navigation, handleUpdateBacklog }) {
    }
 
     return (
-      <View key={isbn} style={styles.mainContainer}>   
-        <View style={styles.resultContainer}>   
+      <View key={isbn} style={styles.mainContainer}> 
+        <Text style={styles.titleLine}>{title}</Text>     
+        <View style={styles.resultContainer}>             
           <Image 
               source={{uri: `https://covers.openlibrary.org/b/isbn/${isbn}-L.jpg`}}
               style={styles.cover}
           />
-          <View>
-            <Text>{title}</Text>
+          <View style={{marginTop: 20}}>            
             <Text>{author}</Text>
             <Text>{isbn} </Text>
           </View>
-          <Switch 
-            onValueChange={(value) => {handleChangeToggle(value)}}
-            value={switchValue}
-          />
+          <View>
+            <Text>{switchValue ? 'Finished' : 'Backlog'}</Text>
+            <Switch 
+              onValueChange={(value) => {handleChangeToggle(value)}}
+              value={switchValue}
+              thumbColor={switchValue ? '#377ba4' : '#bbb6c7'}
+              trackColor={'#bbb6c7'}
+            />
+          </View>
         </View> 
         <View style={styles.buttonContainer}>
           <CustomButton 
@@ -76,6 +81,10 @@ const styles = StyleSheet.create({
         flexDirection:'row',
         justifyContent: 'flex-end',
         paddingBottom: 10
+    },
+    titleLine: {
+      fontSize: 15,
+      fontWeight: 'bold'
     }
   });
    

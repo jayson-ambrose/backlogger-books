@@ -11,9 +11,10 @@ function CustomButton({
     const [buttonColor, setButtonColor] = useState(color)
 
     function flash () {
-        setButtonColor('#a4a4a4')
+        setButtonColor('#60292e')
         setTimeout(() => {
             setButtonColor(color)
+            
         }, 50)
     }
 
@@ -24,8 +25,10 @@ function CustomButton({
             width: width,
             height: height}]} 
         onPress={() => {
-            onPress()
+            
             flash()
+            onPress()
+            
         }}>
             <Text style={styles.text}>{title}</Text>
         </Pressable>

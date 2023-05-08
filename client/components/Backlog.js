@@ -4,6 +4,7 @@ import { activeAccountAtom  } from './lib/atoms';
 import {useRecoilValue} from 'recoil'
 import {Picker} from '@react-native-picker/picker'
 import BacklogDisplay from './BacklogDisplay';
+import CustomTextInput from './CustomTextInput';
 
 function Backlog({navigation}) {
 
@@ -12,6 +13,10 @@ function Backlog({navigation}) {
     const [backlogList, setBacklogList] = useState([])
     const [backlogFilter, setBacklogFilter] = useState('no-filter')
     const [titleFilter, setTitleFilter] = useState('')
+
+    function handleChangeTitleFilter (value) {
+      setTitleFilter(value)
+    }
 
     useEffect(() => {
       fetch(`http://127.0.0.1:5055/users/${activeAccount.id}/backlogs`)
@@ -55,33 +60,37 @@ function Backlog({navigation}) {
     })   
     
     return(
-      <View>
-        <View>
-            <Picker
-              selectedValue={backlogFilter} 
-              label={backlogFilter}
-              onValueChange={(itemValue, itemIndex) => setBacklogFilter(itemValue)}
-              enabled={true}>        
+      <View style={styles.mainContainer}>
+        <View style={{width:'90%'}}>
+          <Picker            
+            selectedValue={backlogFilter} 
+            label={backlogFilter}
+            onValueChange={(itemValue, itemIndex) => setBacklogFilter(itemValue)}
+            enabled={true}>        
                           
-              <Picker.Item label='No Filter' value='no-filter' />
-              <Picker.Item label='Completed' value='completed' />
-              <Picker.Item label='Not Completed' value='not-completed' />
-            </Picker>
-
-            <Text>Filter by title: </Text>
-            <TextInput
-              placeholder={'enter query'} 
-              onChangeText={(value) => setTitleFilter(value)}
-              value={titleFilter}
-            />
-            <ScrollView>
-              {displayBacklogs} 
-            </ScrollView>           
-          </View>
-        </View>)}  
+            <Picker.Item label='No Filter' value='no-filter' />
+            <Picker.Item label='Completed' value='completed' />
+            <Picker.Item label='Not Completed' value='not-completed' />
+          </Picker>       
+          <CustomTextInput
+            placeholder={'Filter by title...'} 
+            handleChangeText={handleChangeTitleFilter}
+            contorlledText={titleFilter}
+            highlightColor='#60292e'
+          />
+        </View>
+        <ScrollView style={{width: '90%'}}>
+          {displayBacklogs} 
+        </ScrollView>  
+      </View>)}  
 
 export default Backlog
 
 const styles = StyleSheet.create({
+  mainContainer: {
+    flex: 1,
+    alignItems: 'center',
+    backgroundColor: '#f8f6ea'
+  }
     
   });

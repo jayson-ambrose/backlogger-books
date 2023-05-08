@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { StyleSheet, Text, View, ScrollView, Button, Alert } from 'react-native';
 import { useRecoilValue} from 'recoil'
 import { bookAtom, loggedInAtom } from './lib/atoms';
+import CustomButton from './CustomButton';
 
 function Reviews({ navigation }) {
 
@@ -23,24 +24,25 @@ function Reviews({ navigation }) {
 
     const displayReviews = reviewsList.map((review) => {
         return (
-            <View key={review.id}>
-                <Text>{review.user.username}</Text>
+            <View key={review.id} style={{alignContent: 'center'}}>
+                <Text style={styles.title}>{review.user.username}</Text>
                 <Text>{review.review_text}</Text>
                 <Text>{review.rating}/10</Text>                
             </View>
         )})
 
     let reviewBookButton =(
-        <Button 
-            color={'#adc6ec'} 
+        <CustomButton 
+            color={'#bbb6c7'} 
             title='Write Review' 
             onPress={() => promptLogin() } />)
 
     if(loggedIn) {
         reviewBookButton = (
-            <Button 
+            <CustomButton 
                 title='Write Review'
-                onPress={() => navigation.navigate('WriteReview')}/>)}
+                onPress={() => navigation.navigate('WriteReview')}
+                color={'#377ba4'}/>)}
 
     function promptLogin () {
         Alert.alert('Go to log-in screen?', 'Must be logged in to write reviews.', [
@@ -49,12 +51,12 @@ function Reviews({ navigation }) {
         ])}
 
     return(
-        <View>
-            <Text >{title}</Text>
+        <View style={styles.mainContainer}>
+            <Text style={styles.title}>{title}</Text>
             <Text>{author}</Text>
             <Text>{isbn}</Text>
             {reviewBookButton}
-            <ScrollView>
+            <ScrollView style={{width: '90%'}}>
                 {displayReviews}
             </ScrollView>
         </View>)
@@ -63,18 +65,13 @@ function Reviews({ navigation }) {
 export default Reviews
 
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: '#fff',
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
+    mainContainer: {
+        flex: 1,
+        alignItems: 'center',
+        backgroundColor: '#f8f6ea',
+      },
     title: {
         fontSize: 20,
-        fontWeight: 'bold',
-    },
-    username: {
-        fontSize: 15,
         fontWeight: 'bold',
     }
   });
