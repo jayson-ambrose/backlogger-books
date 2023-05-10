@@ -22,13 +22,15 @@ function ScanBarcode({navigation}) {
         console.log(`barcode type: ${type} \n barcode data: ${data}`)
         
         fetch(`https://openlibrary.org/search.json?isbn=${data}&limit=1`)
-        .then(resp => resp.json())
-        .then(bookInfo => { 
+        .then(resp => {
+            if(resp.ok) {
+                resp.json().then(bookInfo => { 
             
-            navigation.replace('Details', {title: bookInfo.docs[0].title, 
+            navigation.replace('Details', {
+            title: bookInfo.docs[0].title, 
             isbn: data, 
             author: bookInfo.docs[0].author_name[0] })            
-        })
+        })}})
     }
 
     if (hasPermission == null) {

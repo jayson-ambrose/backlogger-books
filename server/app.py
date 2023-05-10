@@ -7,6 +7,7 @@ from models import User, Review, Backlog, Book
 app.secret_key = '1gds2h1Fhf2ZD2g1jh8wA1f5hSS12g5AG'
 
 class Logout(Resource):
+
     def get(self):
         session['user_id'] = None
         return {}, 204
@@ -14,7 +15,7 @@ class Logout(Resource):
     def delete(self):
         print(session['user_id'])
         session['user_id'] = None
-        return {}, 204
+        return make_response({}, 204)
 
 class Login(Resource):
 

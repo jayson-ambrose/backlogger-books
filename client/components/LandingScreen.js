@@ -49,12 +49,11 @@ export default function LandingScreen({navigation}) {
         source={require('../assets/banner.png')} 
         style={styles.banner}/>      
       {loggedIn ? <Logout />: <Login navigation={navigation}/>}       
-        <View>
-          
+        <View style={styles.buttonContainer}>          
           <CustomButton 
             color={'#377ba4'}
             title={'Search'} 
-            onPress={() => navigation.navigate('Search')}        
+            onPress={() => navigation.navigate('Search')}       
           />
           <CustomButton 
             color={'#377ba4'}
@@ -73,6 +72,15 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     backgroundColor: '#f8f6ea',
+    height: '50%'
+  },
+  buttonContainer:{
+    flex: 0,
+    width: '95%',
+    justifyContent: 'flex-end',
+    marginTop: 10,
+    marginBottom: 5,
+    position: 'relative'
   },
   banner: {
     width: '100%',

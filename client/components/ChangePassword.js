@@ -27,6 +27,10 @@ function ChangePassword({ navigation }) {
   }
 
   function handleSubmit(oldPass, pass, rePass) {
+
+    if (pass.length < 5 || pass.length > 35) {
+      Alert.alert('Password must be 5 to 34 characters long.')
+    }    
     
       const credentials = {
           type: 'change_pw',
@@ -61,21 +65,21 @@ function ChangePassword({ navigation }) {
             style={styles.banner}/>  
           <View style={{width: '90%'}}>
             <CustomTextInput 
-                secureTextEntry={true} 
+                secure={true} 
                 placeholder={'Enter current password...'}
                 controlledText={oldPassText}
                 handleChangeText={(value) => setOldPassText(value)}
                 highlightColor={'#60292e'}
             />
             <CustomTextInput 
-                secureTextEntry={true} 
+                secure={true} 
                 placeholder={'Enter new password...'}
                 controlledText={passText}
                 handleChangeText={(value) => setPassText(value)}
                 highlightColor={'#60292e'}
             />
             <CustomTextInput 
-                secureTextEntry={true} 
+                secure={true} 
                 placeholder={'Re-enter new password...'}
                 controlledText={rePassText}
                 handleChangeText={(value) => setRePassText(value)}

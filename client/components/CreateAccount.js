@@ -15,6 +15,15 @@ function CreateAccount({ navigation }) {
   const [rePassText, setRePassText] = useState('')
 
   function handleSubmit(user, pass, rePass) {
+
+    if (user.length < 5 || user.length > 15){
+      Alert.alert('Username must be 5 to 15 characters long and must be unique.')
+      return
+    }
+
+    if (pass.length < 5 || pass.length > 35) {
+      Alert.alert('Password must be 5 to 34 characters long.')
+    }
     
       const credentials = {
          username: user,

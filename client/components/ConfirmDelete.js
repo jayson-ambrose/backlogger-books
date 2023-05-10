@@ -11,7 +11,7 @@ function ConfirmDelete({navigation}) {
 
     function handleDelete() {
 
-        fetch(`http://127.0.0.1:5055/users/${activeAccount.id}`, {
+        fetch(`http://127.0.0.1:5055//users/${activeAccount.id}`, {
             method: 'DELETE'
         })
         .then(resp => {

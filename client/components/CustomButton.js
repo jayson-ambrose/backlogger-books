@@ -3,10 +3,13 @@ import {StyleSheet, Text, Pressable } from 'react-native';
 
 function CustomButton({
     onPress, 
-    color='black', 
+    color='black',
+    borderColor=null,
+    borderWidth=1, 
     title='Button', 
     width=null,
-    height=null }) {
+    height=null,
+    marginBottom=1 }) {
 
     const [buttonColor, setButtonColor] = useState(color)
 
@@ -23,7 +26,10 @@ function CustomButton({
         style={[styles.button, {
             backgroundColor: color,
             width: width,
-            height: height}]} 
+            height: height,
+            borderWidth: borderWidth,
+            borderColor: borderColor,
+            marginBottom: marginBottom}]} 
         onPress={() => {
             
             flash()

@@ -19,7 +19,7 @@ function Details({route, navigation}) {
         author: author}   
 
     useEffect(() => {
-        fetch('http://127.0.0.1:5055/books', {
+        fetch('http://127.0.0.1:5055//books', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -89,6 +89,7 @@ function Details({route, navigation}) {
     }
 
     function processSetFavTitle() {
+        console.log('hi')
 
         const title_payload = {
             type: 'change_fav_title',
@@ -168,15 +169,17 @@ function Details({route, navigation}) {
         />
         <Text>{title}</Text>
         <Text>{author}</Text>
-        <Text>{isbn}</Text>              
-        <CustomButton 
-            title="Reviews" 
-            onPress={() => navigation.navigate('Reviews', {isbn: isbn, title: title, author: author})}
-            color={'#377ba4'}
-        />
-        {backlogButton}  
-        {favAuthButton}   
-        {favTitleButton}    
+        <Text>{isbn}</Text>
+        <View style={styles.buttonContainer}>            
+            <CustomButton 
+                title="Reviews" 
+                onPress={() => navigation.navigate('Reviews', {isbn: isbn, title: title, author: author})}
+                color={'#377ba4'}
+            />
+            {backlogButton}  
+            {favAuthButton}   
+            {favTitleButton}
+        </View>      
       </View>
     )
 }
@@ -192,5 +195,13 @@ const styles = StyleSheet.create({
     cover: {
         height: 340,
         width: 220
+    },
+    buttonContainer:{
+      flex: 0,
+      width: '95%',
+      justifyContent: 'flex-end',
+      marginTop: 10,
+      marginBottom: 5,
+      position: 'relative'
     }
   });

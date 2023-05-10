@@ -19,6 +19,10 @@ function WriteReview({ navigation }) {
     }
 
     function handleSubmitReview() {
+        if (reviewPayload.text.length === 0 || reviewPayload.text === false){
+            Alert.alert('Must enter some review text.')
+            return
+        }
         fetch(`http://127.0.0.1:5055/books/${reviewBook.id}/reviews`, {
             method: 'POST',
             headers: {
@@ -29,7 +33,6 @@ function WriteReview({ navigation }) {
         .then(resp => {
             console.log(resp.status)
             if (resp.ok){
-                console.log(resp.json())
                 resp.json().then(data => {
                     Alert.alert('Review posted')
                     navigation.navigate('Details', {isbn: reviewBook.isbn, title: reviewBook.title, author: reviewBook.author})
