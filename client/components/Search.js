@@ -22,8 +22,6 @@ function Search({navigation}) {
     
     const handleSearch = () => {
 
-        console.log(query)
-
         fetch(`https://openlibrary.org/search.json?${searchFilter}=${query}&limit=40`)
         .then(resp => resp.json())
         .then(data => {

@@ -11,8 +11,6 @@ function Details({route, navigation}) {
     const[activeAccount, setActiveAccount] = useRecoilState(activeAccountAtom)
     const[book, setBook] = useRecoilState(bookAtom)
 
-    console.log(book)
-
     const payload = {
         isbn: isbn,
         title: title,
@@ -31,7 +29,7 @@ function Details({route, navigation}) {
                 resp.json().then(data => setBook(data))
             }
             else {
-                console.log(resp.json())
+                throw error('Error')
             }})        
     },[])
 
@@ -39,10 +37,10 @@ function Details({route, navigation}) {
 
     if (book) {
         let totalScore = 0
-        book.reviews.forEach((review) => {
+        book.reviews?.forEach((review) => {
             totalScore = totalScore + review.rating
         })
-        avgRating = totalScore / book.reviews.length
+        avgRating = totalScore / book.reviews?.length
     }
 
     function processBacklog() {
@@ -98,7 +96,6 @@ function Details({route, navigation}) {
     }
 
     function processSetFavTitle() {
-        console.log('hi')
 
         const title_payload = {
             type: 'change_fav_title',
