@@ -6,8 +6,6 @@ import CustomButton from './CustomButton';
 
 function Details({route, navigation}) {
 
-    console.log(route.params, '<----- route params')
-
     const {isbn, title, author} = route.params
 
     const[activeAccount, setActiveAccount] = useRecoilState(activeAccountAtom)
@@ -19,7 +17,7 @@ function Details({route, navigation}) {
         author: author}   
 
     useEffect(() => {
-        fetch('http://127.0.0.1:5055//books', {
+        fetch('http://127.0.0.1:5055/books', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -31,9 +29,19 @@ function Details({route, navigation}) {
                 resp.json().then(data => setBook(data))
             }
             else {
-                console.log(resp.json())
+                throw error('Error')
             }})        
     },[])
+
+    let avgRating = 0
+
+    if (book) {
+        let totalScore = 0
+        book.reviews?.forEach((review) => {
+            totalScore = totalScore + review.rating
+        })
+        avgRating = totalScore / book.reviews?.length
+    }
 
     function processBacklog() {
 
@@ -80,7 +88,6 @@ function Details({route, navigation}) {
         .then(resp => {
             if (resp.ok) {
                 resp.json().then(data => {
-                    console.log(data.favorite_author)
                     setActiveAccount({...activeAccount, favorite_author: data.favorite_author})
                     Alert.alert('Favorite author set')
                 })
@@ -89,7 +96,6 @@ function Details({route, navigation}) {
     }
 
     function processSetFavTitle() {
-        console.log('hi')
 
         const title_payload = {
             type: 'change_fav_title',
@@ -106,8 +112,6 @@ function Details({route, navigation}) {
         .then(resp => {
             if (resp.ok) {
                 resp.json().then(data => {
-                    console.log(data)
-                    console.log(data.favorite_title)
                     setActiveAccount({...activeAccount, favorite_title: data.favorite_title})
                     Alert.alert('Favorite title set')
                 })
@@ -170,6 +174,7 @@ function Details({route, navigation}) {
         <Text>{title}</Text>
         <Text>{author}</Text>
         <Text>{isbn}</Text>
+        <Text>{avgRating ? `Average Rating: ${avgRating.toFixed(2)} `: 'Not Yet Rated'}</Text>
         <View style={styles.buttonContainer}>            
             <CustomButton 
                 title="Reviews" 
@@ -193,8 +198,8 @@ const styles = StyleSheet.create({
         backgroundColor: '#f8f6ea',
       },
     cover: {
-        height: 340,
-        width: 220
+        height: 320,
+        width: 210
     },
     buttonContainer:{
       flex: 0,

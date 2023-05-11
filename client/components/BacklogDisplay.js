@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Button, StyleSheet, Text, View, ScrollView, Image, Switch } from 'react-native';
 import CustomButton from './CustomButton';
 
-function BacklogDisplay({ backlog, navigation, handleUpdateBacklog }) {
+function BacklogDisplay({ backlog, navigation, handleUpdateBacklog}) {
 
   const {title, author, isbn, id} = backlog.book    
   const [switchValue, setSwitchValue] = useState(backlog.completed)
@@ -11,7 +11,7 @@ function BacklogDisplay({ backlog, navigation, handleUpdateBacklog }) {
     setSwitchValue(value)
     updateCompleted(value)
   }
-
+  
   function updateCompleted(value) {
 
     fetch(`http://127.0.0.1:5055/backlogs/${backlog.id}`, {
@@ -56,6 +56,7 @@ function BacklogDisplay({ backlog, navigation, handleUpdateBacklog }) {
             onPress={() => navigation.navigate('Details', {isbn: isbn, title: title, author: author, id: id})}
             color='#377ba4'
           />
+          
         </View> 
       </View>
     )}

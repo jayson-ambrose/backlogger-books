@@ -8,7 +8,6 @@ function AccountDetails({navigation}) {
 
     const activeAccount = useRecoilValue(activeAccountAtom)
 
-
     const numBooksReviewed = activeAccount.reviews.length
 
     const booksReviewed = activeAccount.reviews.map((review) => {

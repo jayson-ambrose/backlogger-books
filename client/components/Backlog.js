@@ -24,7 +24,7 @@ function Backlog({navigation}) {
       .then(data => {
         setBacklogList(data)
       })
-    }, [])
+    }, [])  
 
     function handleUpdateBacklog (val, obj) {      
       setBacklogList(backlogList => {

@@ -31,7 +31,6 @@ function WriteReview({ navigation }) {
             body: JSON.stringify(reviewPayload)
         })
         .then(resp => {
-            console.log(resp.status)
             if (resp.ok){
                 resp.json().then(data => {
                     Alert.alert('Review posted')

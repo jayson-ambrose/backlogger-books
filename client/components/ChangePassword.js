@@ -30,6 +30,7 @@ function ChangePassword({ navigation }) {
 
     if (pass.length < 5 || pass.length > 35) {
       Alert.alert('Password must be 5 to 34 characters long.')
+      return
     }    
     
       const credentials = {

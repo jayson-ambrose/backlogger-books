@@ -19,7 +19,6 @@ function ScanBarcode({navigation}) {
     const handleBarCodeScanned = ({type, data}) => {
         
         setScanned(true);
-        console.log(`barcode type: ${type} \n barcode data: ${data}`)
         
         fetch(`https://openlibrary.org/search.json?isbn=${data}&limit=1`)
         .then(resp => {

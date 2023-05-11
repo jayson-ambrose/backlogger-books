@@ -159,14 +159,14 @@ class Books(Resource):
             try:
                 db.session.add(new_book)
                 db.session.commit()                              
-                return make_response(new_book.to_dict(only=('title', 'id', 'isbn', 'author')), 201)
+                return make_response(new_book.to_dict(only=('title', 'id', 'isbn', 'author', 'reviews')), 201)
             
             except:
                 return make_response({'error': '400: Invalid information, unable to add book.'}, 400)
 
         else:
             print('Book found in database. Returned book values')
-            return make_response(book.to_dict(only=('title', 'id', 'isbn', 'author')), 200)
+            return make_response(book.to_dict(only=('title', 'id', 'isbn', 'author', 'reviews')), 200)
 
 class BooksById(Resource):
     def get(self, id):
@@ -262,11 +262,18 @@ class BacklogsById(Resource):
             return make_response(backlog.to_dict(), 200)
         return make_response({'error': 'error 404: backlog not found'}, 404)
     
+    def delete(self, id):
+        backlog= Backlog.query.filter(Backlog.id == id).one_or_none()
+        if backlog:
+            db.session.delete(backlog)
+            db.session.commit()
+            return make_response('', 204)
+        return make_response({'error': 'error 404: backlog not found'}, 404)
+    
     def patch(self, id):
         backlog = Backlog.query.filter(Backlog.id == id).one_or_none()
         req = request.get_json()
 
-        print(req)
         if backlog: 
 
             backlog.completed = 1 if req else 0
