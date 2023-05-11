@@ -92,6 +92,8 @@ class Book(db.Model, SerializerMixin):
 class Review(db.Model, SerializerMixin):
     __tablename__ = 'reviews'
 
+    serialize_rules = ('-book.reviews', '-book.reviewed_by', '-book.backlogged_by')
+
     id = db.Column(db.Integer, primary_key=True)
     rating = db.Column(db.Integer)
     review_text = db.Column(db.Text)
