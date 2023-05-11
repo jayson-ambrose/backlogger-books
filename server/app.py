@@ -262,6 +262,14 @@ class BacklogsById(Resource):
             return make_response(backlog.to_dict(), 200)
         return make_response({'error': 'error 404: backlog not found'}, 404)
     
+    def delete(self, id):
+        backlog= Backlog.query.filter(Backlog.id == id).one_or_none()
+        if backlog:
+            db.session.delete(backlog)
+            db.session.commit()
+            return make_response('', 204)
+        return make_response({'error': 'error 404: backlog not found'}, 404)
+    
     def patch(self, id):
         backlog = Backlog.query.filter(Backlog.id == id).one_or_none()
         req = request.get_json()
